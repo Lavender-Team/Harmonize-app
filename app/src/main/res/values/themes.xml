@@ -16,9 +16,15 @@
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
         <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
 
+        <item name="android:windowLightNavigationBar">true</item>
+
         <!-- Customize your theme here. -->
     </style>
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+    </style>
+    <style name="TabLayoutStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textFontWeight">700</item>
     </style>
 </resources>

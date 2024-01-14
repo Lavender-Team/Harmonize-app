@@ -1,6 +1,9 @@
 package kr.ac.chungbuk.harmonize;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

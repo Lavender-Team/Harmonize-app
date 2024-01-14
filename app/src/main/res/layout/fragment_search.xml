@@ -50,7 +50,8 @@
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:onClick="@{(view) -> fragment.focusSearchBox()}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,15 +69,67 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/typeTab"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="@+id/historyListView"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_weight="1"
+            tools:layout_editor_absoluteX="0dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="12dp"
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="8dp"
+                android:clipToPadding="false"
+                android:background="@drawable/tablayout_bg">
+
+                <View
+                    android:id="@+id/indicator"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/indicator_bg"/>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/typeTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_bg"
+                    app:tabTextAppearance="@style/TabLayoutStyle"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
+                    app:tabTextColor="@color/gray_3"
+                    app:tabSelectedTextColor="@color/purple_500"
+                    app:tabIndicatorColor="@color/purple_500"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabRippleColor="@null"/>
+            </FrameLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/searchResultViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+            />
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/historyListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintVertical_weight="1"
             android:divider="#EEEEEE"
             android:dividerHeight="1dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/typeTab" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
