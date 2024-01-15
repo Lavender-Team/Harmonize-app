@@ -6,9 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/musicListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment One"/>
+        tools:listitem="@layout/music_list_item"/>
 
 </LinearLayout>
