@@ -146,19 +146,11 @@ public class SearchFragment extends Fragment {
     }
 
     public void search() {
-        ViewGroup.LayoutParams lp = binding.typeTab.getLayoutParams();
-        lp.height = 0;
-        binding.typeTab.setLayoutParams(lp);
-
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(binding.etSearch.getWindowToken(), 0);
+        binding.historyListView.setVisibility(View.INVISIBLE);
     }
 
     public void focusSearchBox() {
-        int height = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
-        ViewGroup.LayoutParams lp = binding.typeTab.getLayoutParams();
-        lp.height = height;
-        binding.typeTab.setLayoutParams(lp);
+        binding.historyListView.setVisibility(View.VISIBLE);
     }
 
     public void showFilter() {
