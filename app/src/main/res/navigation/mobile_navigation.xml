@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="kr.ac.chungbuk.harmonize.ui.dashboard.DashboardFragment"
+        android:name="kr.ac.chungbuk.harmonize.ui.bookmark.BookmarkFragment"
         android:label="찜목록"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_bookmark" />
 
     <fragment
         android:id="@+id/navigation_menu"
