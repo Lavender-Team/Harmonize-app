@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="kr.ac.chungbuk.harmonize.ui.notifications.NotificationsFragment"
+        android:name="kr.ac.chungbuk.harmonize.ui.more.MoreFragment"
         android:label="더보기"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_more" />
 </navigation>

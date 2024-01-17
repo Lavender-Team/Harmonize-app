@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="more_menu">
+        <item>서비스 소개</item>
+        <item>공지사항</item>
+        <item>도움말</item>
+        <item>1:1 문의</item>
+        <item>오픈소스 라이선스</item>
+        <item>회원 탈퇴</item>
+    </string-array>
+
+    <string-array name="spinner_genre">
+        <item>전체</item>
+        <item>가요</item>
+        <item>팝송</item>
+    </string-array>
+</resources>
