@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.ui.profile.FindIdActivity;
+import kr.ac.chungbuk.harmonize.ui.profile.FindPasswordActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.GenderAgeActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.GenreActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.LoginActivity;
+import kr.ac.chungbuk.harmonize.ui.profile.SignupActivity;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -40,6 +43,30 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TestActivity.this, GenreActivity.class));
+            }
+        });
+
+        AppCompatButton btnOpenSignup = findViewById(R.id.btnOpenSignup);
+        btnOpenSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TestActivity.this, SignupActivity.class));
+            }
+        });
+
+        AppCompatButton btnOpenFindId = findViewById(R.id.btnOpenFindId);
+        btnOpenFindId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TestActivity.this, FindIdActivity.class));
+            }
+        });
+
+        AppCompatButton btnOpenFindPassword = findViewById(R.id.btnOpenFindPassword);
+        btnOpenFindId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TestActivity.this, FindPasswordActivity.class));
             }
         });
     }

@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Harmonize"
         tools:targetApi="31">
         <activity
+            android:name=".ui.profile.FindPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.SignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.LoginActivity"
             android:exported="false" />
         <activity

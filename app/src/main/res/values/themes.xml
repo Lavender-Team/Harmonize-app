@@ -27,4 +27,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textFontWeight">700</item>
     </style>
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CheckBox</item>
+    </style>
+    <style name="ThemeOverlay.App.CheckBox" parent="">
+        <item name="colorOnSurface">@color/gray_4</item>
+        <item name="colorSecondary">@color/purple_500</item>
+    </style>
 </resources>
