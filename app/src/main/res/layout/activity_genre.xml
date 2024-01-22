@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.profile.GenreActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_arrow_back_black_28dp"
+            app:tint="@color/black"
+            android:contentDescription="닫기" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선호 장르"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/purple_500"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="를 선택해주세요"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24px"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="선택한 장르를 기반으로 노래를 추천합니다."
+        android:textSize="14dp"
+        android:textColor="@color/gray_4" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4px"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="선호 장르는 총 3개 선택해야 해요."
+        android:textSize="14dp"
+        android:textColor="@color/gray_4"/>
+
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/genres"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start"
+        app:toggle_selectableAmount="3"
+        app:toggle_textSize="18dp">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagSong"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="가요"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagPop"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="팝송"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagJapan"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="일본곡"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagHiphop"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="랩/힙합"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagRNB"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="R&amp;B"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagBallade"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="발라드"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagDance"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="댄스"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagOST"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="OST"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagIndie"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="인디뮤직"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagAdult"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="트로트"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagChild"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="어린이곡"
+            />
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="36dp"
+        android:text="저장"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@drawable/big_purple_button"
+        android:foreground="?selectableItemBackground"
+        />
+
+</LinearLayout>
