@@ -206,16 +206,20 @@
 
     </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
-
-    <androidx.appcompat.widget.AppCompatButton
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="36dp"
-        android:text="저장"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:background="@drawable/big_purple_button"
-        android:foreground="?selectableItemBackground"
-        />
+        android:layout_marginBottom="36dp">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="저장"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="@drawable/big_purple_button"
+            android:foreground="?selectableItemBackground"
+            />
+    </FrameLayout>
 
 </LinearLayout>

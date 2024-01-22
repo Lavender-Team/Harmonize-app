@@ -30,10 +30,10 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
                 app:endIconDrawable="@drawable/ic_search_black_24dp"
                 app:endIconMode="custom"
                 app:hintEnabled="false">
@@ -41,7 +41,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="검색어 입력"
                     android:imeOptions="actionSearch"
                     android:inputType="text"

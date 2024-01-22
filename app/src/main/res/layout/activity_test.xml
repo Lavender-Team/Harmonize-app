@@ -8,10 +8,19 @@
     tools:context=".ui.test.TestActivity">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnOpenGenderAge"
+        android:id="@+id/btnOpenLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="24dp"
+        android:text="로그인"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnOpenGenderAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="성별 연령대 선택"
         />
