@@ -63,7 +63,7 @@ public class TestActivity extends AppCompatActivity {
         });
 
         AppCompatButton btnOpenFindPassword = findViewById(R.id.btnOpenFindPassword);
-        btnOpenFindId.setOnClickListener(new View.OnClickListener() {
+        btnOpenFindPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TestActivity.this, FindPasswordActivity.class));
