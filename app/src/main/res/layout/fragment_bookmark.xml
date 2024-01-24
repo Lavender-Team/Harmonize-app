@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="24dp"
-            android:text="찜한 노래 목록"
+            android:text="좋아요 표시한 노래 목록"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />

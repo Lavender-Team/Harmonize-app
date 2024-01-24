@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="kr.ac.chungbuk.harmonize.ui.bookmark.BookmarkFragment"
-        android:label="찜목록"
+        android:label="좋아요"
         tools:layout="@layout/fragment_bookmark" />
 
     <fragment

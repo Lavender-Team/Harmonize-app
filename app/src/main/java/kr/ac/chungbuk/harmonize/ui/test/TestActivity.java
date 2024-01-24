@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.FindIdActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.FindPasswordActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.GenderAgeActivity;
@@ -67,6 +68,14 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TestActivity.this, FindPasswordActivity.class));
+            }
+        });
+
+        AppCompatButton btnOpenMusic = findViewById(R.id.btnOpenMusic);
+        btnOpenMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TestActivity.this, MusicActivity.class));
             }
         });
     }
