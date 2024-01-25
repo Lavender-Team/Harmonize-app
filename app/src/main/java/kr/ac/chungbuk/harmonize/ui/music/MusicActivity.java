@@ -37,8 +37,8 @@ public class MusicActivity extends AppCompatActivity {
         /* 음악 정보 TabLayout */
         TabFragmentAdapter tabAdapter = new TabFragmentAdapter(getSupportFragmentManager());
         tabAdapter.addFragment(MetadataFragment.newInstance("param1", "param2"), "노래 정보");
-        tabAdapter.addFragment(FragmentTwo.newInstance(), "음역대");
-        tabAdapter.addFragment(FragmentTwo.newInstance(), "따라 부르기");
+        tabAdapter.addFragment(PitchdataFragment.newInstance("param1", "param2"), "음역대");
+        tabAdapter.addFragment(SingFragment.newInstance("param1", "param2"), "따라 부르기");
         binding.detailViewPager.setAdapter(tabAdapter);
         binding.typeTabLayout.setupWithViewPager(binding.detailViewPager);
 
