@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:text="검색 필터"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:text="가수"
+            android:textSize="14sp"
+            android:textColor="@color/gray_4"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            app:singleSelection="false">
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="72dp"
+                android:layout_height="54dp"
+                android:text="남성"
+                android:textSize="12sp" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="72dp"
+                android:layout_height="54dp"
+                android:text="여성"
+                android:textSize="12sp" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="72dp"
+                android:layout_height="54dp"
+                android:text="혼성"
+                android:textSize="12sp" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="장르"
+            android:textColor="@color/gray_4"
+            android:textSize="14sp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/spinner_outline">
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="214dp"
+                android:layout_height="48dp"
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:gravity="right" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="음역대"
+            android:textColor="@color/gray_4"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:text="내 음역대로 설정"
+            android:textSize="13dp"
+            android:textColor="@color/black"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical">
+
+        <com.jaygoo.widget.RangeSeekBar
+            android:id="@+id/sb_range_5"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:rsb_mode="range"
+            app:rsb_thumb_drawable="@drawable/seekbar_thumb_purple"
+            app:rsb_progress_color="@color/purple_500"
+            app:rsb_progress_default_color="@color/purple_200"
+            app:rsb_progress_height="4dp"
+            app:rsb_tick_mark_layout_gravity="top"
+            app:rsb_tick_mark_text_array="@array/seekbar_string"
+            app:rsb_tick_mark_gravity="center"
+            app:rsb_tick_mark_mode="number"
+            app:rsb_tick_mark_text_margin="20dp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="12dp"
+        android:background="@drawable/top_gray_border"
+        android:gravity="right">
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="24dp"
+            android:layout_marginRight="4dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="초기화"
+            android:textSize="14dp"
+            android:textColor="@color/black"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="24dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="적용"
+            android:textSize="14dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
+import kr.ac.chungbuk.harmonize.uicomponent.FilterDialog;
 import kr.ac.chungbuk.harmonize.uicomponent.FragmentOne;
 import kr.ac.chungbuk.harmonize.uicomponent.FragmentTwo;
 import kr.ac.chungbuk.harmonize.utility.adapter.OnItemClickListener;
@@ -129,7 +130,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
         return root;
     }
 
@@ -154,8 +154,10 @@ public class SearchFragment extends Fragment {
     }
 
     public void showFilter() {
-        searchViewModel.addHistory("검색어");
-        //Toast.makeText(getContext(), "showFilter", Toast.LENGTH_LONG).show();
-        historyAdapter.notifyDataSetChanged();
+        FilterDialog filterDialog = new FilterDialog();
+        filterDialog.show(getActivity().getSupportFragmentManager(), "filter");
+
+        //searchViewModel.addHistory("검색어");
+        //historyAdapter.notifyDataSetChanged();
     }
 }
