@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,18 +14,18 @@ import java.util.ArrayList;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 
-public class MusicListAdapter2 extends RecyclerView.Adapter<MusicListAdapter2.Holder> {
+public class MusicListShadowAdapter extends RecyclerView.Adapter<MusicListShadowAdapter.Holder> {
 
-    ObservableArrayList<SimpleMusic> items;
+    ArrayList<SimpleMusic> items = new ArrayList<>();
 
-    public MusicListAdapter2(ObservableArrayList<SimpleMusic> items) {
+    public MusicListShadowAdapter(ArrayList<SimpleMusic> items) {
         this.items = items;
     }
 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.music_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.music_list_item_shadow, parent, false);
         return new Holder(v);
     }
 
