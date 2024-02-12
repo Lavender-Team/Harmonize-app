@@ -1,6 +1,7 @@
 package kr.ac.chungbuk.harmonize.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentHomeBinding;
 import kr.ac.chungbuk.harmonize.utility.adapter.ArtistListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListShadowAdapter;
+import kr.ac.chungbuk.harmonize.utility.adapter.RankAdapter;
 
 public class HomeFragment extends Fragment {
 
@@ -24,9 +29,13 @@ public class HomeFragment extends Fragment {
 
     LinearLayoutManager homeRecommendLinearLayoutManager;
     LinearLayoutManager artistLayoutManager;
+    LinearLayoutManager genreMusicLayoutManager;
 
     MusicListShadowAdapter homeRecommendAdapter;
     ArtistListAdapter artistAdapter;
+    MusicListAdapter genreMusicAdapter;
+
+    Handler sliderHandler = new Handler();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +57,23 @@ public class HomeFragment extends Fragment {
         artistAdapter = new ArtistListAdapter(homeViewModel.getArtists());
         binding.artistListView.setLayoutManager(artistLayoutManager);
         binding.artistListView.setAdapter(artistAdapter);
+
+        /* 장르별 맞춤 추천곡 */
+        genreMusicLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        genreMusicAdapter = new MusicListAdapter(homeViewModel.getGenreMusics());
+        binding.genreMusicListView.setLayoutManager(genreMusicLayoutManager);
+        binding.genreMusicListView.setAdapter(genreMusicAdapter);
+
+        /* 인기곡 순위 */
+        List<String> sliderItems = new ArrayList<>();
+        sliderItems.add("https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg");
+        sliderItems.add("https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg");
+        sliderItems.add("https://cdn.pixabay.com/photo/2020/11/10/01/34/pet-5728249_1280.jpg");
+        sliderItems.add("https://cdn.pixabay.com/photo/2020/12/21/19/05/window-5850628_1280.png");
+        sliderItems.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+        sliderItems.add("https://cdn.pixabay.com/photo/2019/10/15/13/33/red-deer-4551678_1280.jpg");
+        binding.rankViewPager.setAdapter(new RankAdapter(getContext(), sliderItems));
+        binding.rankViewPager.setOffscreenPageLimit(3);
 
 
 

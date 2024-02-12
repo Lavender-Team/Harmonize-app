@@ -7,21 +7,57 @@
     android:orientation="vertical"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:clipToPadding="false"
+        android:paddingHorizontal="22dp"
+        android:layout_marginTop="24dp"
+        android:overScrollMode="never"
+        android:scrollbarSize="0dp">
 
-        <androidx.appcompat.widget.AppCompatToggleButton
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ㅈㅏ너일"
-            android:textOff="ewfwef"
-            android:textOn="wefwe12"
-            android:background="@drawable/white_button"
-            />
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="가요"
+                android:textOn="가요"
+                style="@style/TabToggleButtonStyle" />
+
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="팝송"
+                android:textOn="팝송"
+                style="@style/TabToggleButtonStyle" />
+
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="랩/힙합"
+                android:textOn="랩/힙합"
+                style="@style/TabToggleButtonStyle" />
+
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="일본곡"
+                android:textOn="일본곡"
+                style="@style/TabToggleButtonStyle" />
+
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="발라드"
+                android:textOn="발라드"
+                style="@style/TabToggleButtonStyle" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <TextView
         android:visibility="gone"

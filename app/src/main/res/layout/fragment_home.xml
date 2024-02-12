@@ -26,6 +26,8 @@
                 android:layout_marginLeft="24dp"/>
         </LinearLayout>
 
+
+        <!-- 내 목소리 맞춤 추천곡 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
                 tools:itemCount="4"
                 tools:listitem="@layout/music_list_item_shadow"/>
 
@@ -81,56 +84,174 @@
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:paddingVertical="24dp"
-        android:orientation="vertical">
-
-        <TextView
+        <!-- 나와 비슷한 가수 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginHorizontal="24dp"
-            android:text="나와 비슷한 가수"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="12dp"
+            android:paddingVertical="24dp"
+            android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/artistListView"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginHorizontal="24dp"
+                android:text="나와 비슷한 가수"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/artistListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="18dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                tools:itemCount="1"
+                tools:listitem="@layout/artist_item"
+                />
+        </LinearLayout>
+
+
+        <!-- 장르별 맞춤 추천곡 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="18dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            tools:itemCount="1"
-            tools:listitem="@layout/artist_item"
-            />
-    </LinearLayout>
+            android:layout_marginTop="12dp"
+            android:paddingVertical="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginHorizontal="24dp"
+                android:text="장르별 맞춤 추천곡"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="22dp"
+                android:overScrollMode="never"
+                android:scrollbarSize="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="가요"
+                        android:textOn="가요"
+                        style="@style/TabToggleButtonStyle" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="팝송"
+                        android:textOn="팝송"
+                        style="@style/TabToggleButtonStyle" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="랩/힙합"
+                        android:textOn="랩/힙합"
+                        style="@style/TabToggleButtonStyle" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="일본곡"
+                        android:textOn="일본곡"
+                        style="@style/TabToggleButtonStyle" />
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="발라드"
+                        android:textOn="발라드"
+                        style="@style/TabToggleButtonStyle" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genreMusicListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                tools:itemCount="3"
+                tools:listitem="@layout/music_list_item" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/white_ripple_button"
+                android:clickable="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:paddingVertical="12dp"
+                    android:text="더보기"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="14dp"
+                    android:src="@drawable/ic_arrow_right_black_8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:paddingVertical="24dp"
-        android:orientation="vertical">
-
-        <TextView
+        <!-- 인기곡 순위 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginHorizontal="24dp"
-            android:text="장르별 맞춤 추천곡"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="12dp"
+            android:paddingVertical="24dp"
+            android:orientation="vertical"
+            android:background="@color/gray_1">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginHorizontal="24dp"
+                android:text="인기곡 순위"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
-
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/rankViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:overScrollMode="never"/>
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -11,6 +11,7 @@ public class HomeViewModel extends ViewModel {
 
     private ObservableArrayList<SimpleMusic> homeRecommendMusics = new ObservableArrayList<>();
     private ObservableArrayList<SimpleMusic> artists = new ObservableArrayList<>();
+    private ObservableArrayList<SimpleMusic> genreMusics = new ObservableArrayList<>();
 
     private final MutableLiveData<String> mText;
 
@@ -31,6 +32,10 @@ public class HomeViewModel extends ViewModel {
         artists.add(new SimpleMusic("+13", "이무진"));
         artists.add(new SimpleMusic("+13", "이무진"));
 
+        genreMusics.add(new SimpleMusic("헤어지자말해요", "박재정"));
+        genreMusics.add(new SimpleMusic("비의랩소디", "임재현"));
+        genreMusics.add(new SimpleMusic("가질수없는너", "뱅크"));
+
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }
@@ -41,6 +46,10 @@ public class HomeViewModel extends ViewModel {
 
     public ObservableArrayList<SimpleMusic> getArtists() {
         return artists;
+    }
+
+    public ObservableArrayList<SimpleMusic> getGenreMusics() {
+        return genreMusics;
     }
 
     public LiveData<String> getText() {
