@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
@@ -39,7 +40,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:text="내 목소리 맞춤 추천곡"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:overScrollMode="never"
                 tools:itemCount="4"
                 tools:listitem="@layout/music_list_item_shadow"/>
 
@@ -77,6 +79,59 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="24dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginHorizontal="24dp"
+            android:text="나와 비슷한 가수"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/artistListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="18dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            tools:itemCount="1"
+            tools:listitem="@layout/artist_item"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingVertical="24dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginHorizontal="24dp"
+            android:text="장르별 맞춤 추천곡"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
 
     </LinearLayout>
 </ScrollView>
