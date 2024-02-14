@@ -19,6 +19,7 @@ import java.util.List;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentHomeBinding;
 import kr.ac.chungbuk.harmonize.utility.adapter.ArtistListAdapter;
+import kr.ac.chungbuk.harmonize.utility.adapter.LatestMusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListShadowAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.RankAdapter;
@@ -30,10 +31,12 @@ public class HomeFragment extends Fragment {
     LinearLayoutManager homeRecommendLinearLayoutManager;
     LinearLayoutManager artistLayoutManager;
     LinearLayoutManager genreMusicLayoutManager;
+    LinearLayoutManager latestMusicLayoutManager;
 
     MusicListShadowAdapter homeRecommendAdapter;
     ArtistListAdapter artistAdapter;
     MusicListAdapter genreMusicAdapter;
+    LatestMusicListAdapter latestMusicAdapter;
 
     Handler sliderHandler = new Handler();
 
@@ -72,6 +75,11 @@ public class HomeFragment extends Fragment {
         binding.rankViewPager.setAdapter(new RankAdapter(getContext(), sliderItems));
         binding.rankViewPager.setOffscreenPageLimit(3);
 
+        /* 최신 음악 */
+        latestMusicLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        latestMusicAdapter = new LatestMusicListAdapter(homeViewModel.getLatestMusics());
+        binding.latestMusicListView.setLayoutManager(latestMusicLayoutManager);
+        binding.latestMusicListView.setAdapter(latestMusicAdapter);
 
 
         //final TextView textView = binding.textHome;
