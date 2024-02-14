@@ -246,11 +246,12 @@
                 android:id="@+id/rankViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="68dp"
                 android:clipToPadding="false"
+                android:clipToOutline="false"
                 android:clipChildren="false"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never" />
         </LinearLayout>
 
 

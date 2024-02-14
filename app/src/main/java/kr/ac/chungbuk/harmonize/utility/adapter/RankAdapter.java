@@ -16,11 +16,11 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import kr.ac.chungbuk.harmonize.R;
-import kr.ac.chungbuk.harmonize.databinding.SliderItemBinding;
+import kr.ac.chungbuk.harmonize.databinding.FragmentRankBinding;
 
 public class RankAdapter extends RecyclerView.Adapter<RankAdapter.Holder> {
 
-    private static final String TAG = "SliderAdapter";
+    private static final String TAG = "RankAdapter";
 
     private Context mContext;
     private List<String> sliderItems;
@@ -33,14 +33,14 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.Holder> {
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Holder(SliderItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+        return new Holder(FragmentRankBinding.inflate(LayoutInflater.from(parent.getContext()),
                 parent,
                 false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.bind(sliderItems.get(position));
+        //holder.bind(sliderItems.get(position));
     }
 
     @Override
@@ -52,16 +52,16 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.Holder> {
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private SliderItemBinding mBinding;
+        private FragmentRankBinding mBinding;
 
-        public Holder(SliderItemBinding binding) {
+        public Holder(FragmentRankBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
 
         void bind(String sliderItem) {
             try {
-                Glide.with(mContext).load(sliderItem).into(mBinding.imageSlider);
+                //Glide.with(mContext).load(sliderItem).into(mBinding.imageSlider);
             } catch (Exception e) {
                 Log.d(TAG, "ERROR: " + e.getMessage());
             }
