@@ -4,41 +4,49 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ObservableArrayList;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.databinding.FragmentSearchResultBinding;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
+import kr.ac.chungbuk.harmonize.utility.network.NetworkManager;
+import kr.ac.chungbuk.harmonize.utility.network.event.RequestListener;
 
-public class FragmentOne extends Fragment {
+public class SearchResultFragment extends Fragment {
+
+    NetworkManager networkManager;
 
     RecyclerView musicListView;
     LinearLayoutManager linearLayoutManager;
     MusicListAdapter adapter;
     ArrayList<SimpleMusic> items = new ArrayList<>();
 
-    public static FragmentOne newInstance() {
-        return new FragmentOne();
+
+    public SearchResultFragment() {
+        networkManager = NetworkManager.getInstance(getContext());
     }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_one, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_result, container, false);
 
         musicListView = view.findViewById(R.id.musicListView);
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        adapter = new MusicListAdapter(items);
         musicListView.setLayoutManager(linearLayoutManager);
+        adapter = new MusicListAdapter(items);
         musicListView.setAdapter(adapter);
 
         return view;
@@ -46,9 +54,25 @@ public class FragmentOne extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        items.add(new SimpleMusic("사건의 지평선", "윤하(YOUNHA)"));
-        items.add(new SimpleMusic("좋니", "윤종신"));
-        items.add(new SimpleMusic("기억의 습작", "김동률"));
-        adapter.notifyDataSetChanged();
+
     }
+
+    public void search() {
+
+        networkManager.getSearch(new RequestListener<ArrayList<SimpleMusic>>() {
+            @Override
+            public void getResult(ArrayList<SimpleMusic> musics) {
+                if (musics == null) {
+                    // TODO 오류 처리
+                }
+
+                items.clear();
+                for (SimpleMusic m: musics)
+                    items.add(m);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 }

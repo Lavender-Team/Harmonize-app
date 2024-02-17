@@ -36,4 +36,5 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         fragmentList.add(fragment);
         fragmentTitleList.add(title);
     }
+
 }
