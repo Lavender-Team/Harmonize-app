@@ -78,7 +78,7 @@ public class NetworkManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+                        //error.printStackTrace();
                         listener.getResult(null);
                     }
                 }) {

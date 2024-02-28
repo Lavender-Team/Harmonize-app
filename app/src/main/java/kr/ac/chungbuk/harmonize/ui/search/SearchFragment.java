@@ -1,6 +1,7 @@
 package kr.ac.chungbuk.harmonize.ui.search;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class SearchFragment extends Fragment {
         tabAdapter.addFragment(new SearchResultFragment(), "전체");
         tabAdapter.addFragment(new SearchResultFragment(), "노래");
         tabAdapter.addFragment(new SearchResultFragment(), "가수");
-        tabAdapter.addFragment(new SearchResultFragment(), "노래방 번호");
+        tabAdapter.addFragment(new SearchResultFragment(), "노래방번호");
         binding.searchResultViewPager.setOffscreenPageLimit(4);
         binding.searchResultViewPager.setAdapter(tabAdapter);
         binding.typeTabLayout.setupWithViewPager(binding.searchResultViewPager);
@@ -94,7 +95,15 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) { }
+            public void onPageSelected(int position) {
+                /* 노래방번호 선택시 숫자 키보드 표시 */
+                if (position != 3) { // 3: 노래방 번호
+                    binding.etSearch.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+                else {
+                    binding.etSearch.setInputType(InputType.TYPE_CLASS_NUMBER);
+                }
+            }
             @Override
             public void onPageScrollStateChanged(int state) { }
         });

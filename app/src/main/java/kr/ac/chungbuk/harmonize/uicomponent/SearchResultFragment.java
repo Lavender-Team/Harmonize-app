@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class SearchResultFragment extends Fragment {
     NetworkManager networkManager;
 
     RecyclerView musicListView;
+    ProgressBar progressBar;
     LinearLayoutManager linearLayoutManager;
     MusicListAdapter adapter;
     ArrayList<SimpleMusic> items = new ArrayList<>();
@@ -44,6 +46,7 @@ public class SearchResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_result, container, false);
 
         musicListView = view.findViewById(R.id.musicListView);
+        progressBar = view.findViewById(R.id.progressBar);
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         musicListView.setLayoutManager(linearLayoutManager);
         adapter = new MusicListAdapter(items);
@@ -52,18 +55,16 @@ public class SearchResultFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-    }
-
     public void search() {
+        musicListView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         networkManager.getSearch(new RequestListener<ArrayList<SimpleMusic>>() {
             @Override
             public void getResult(ArrayList<SimpleMusic> musics) {
                 if (musics == null) {
                     // TODO 오류 처리
+                    return;
                 }
 
                 items.clear();
@@ -71,6 +72,8 @@ public class SearchResultFragment extends Fragment {
                     items.add(m);
 
                 adapter.notifyDataSetChanged();
+                musicListView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
