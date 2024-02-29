@@ -15,7 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import java.time.OffsetDateTime;
+
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
+import kr.ac.chungbuk.harmonize.entity.SearchHistory;
+import kr.ac.chungbuk.harmonize.service.SearchHistoryService;
 import kr.ac.chungbuk.harmonize.uicomponent.FilterDialog;
 import kr.ac.chungbuk.harmonize.uicomponent.SearchResultFragment;
 import kr.ac.chungbuk.harmonize.utility.adapter.OnItemClickListener;
@@ -162,6 +166,12 @@ public class SearchFragment extends Fragment {
     }
 
     public void search() {
+        // TODO 검색어 저장 테스트
+        if (!binding.etSearch.getText().toString().isEmpty()) {
+            SearchHistoryService.save(
+                    new SearchHistory(binding.etSearch.getText().toString(), OffsetDateTime.now())
+            );
+        }
 
         getAllResultFragment().search();
         getMusicResultFragment().search();
