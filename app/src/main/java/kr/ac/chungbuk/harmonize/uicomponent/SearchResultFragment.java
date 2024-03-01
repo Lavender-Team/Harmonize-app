@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,9 @@ public class SearchResultFragment extends Fragment {
 
     RecyclerView musicListView;
     ProgressBar progressBar;
+    LinearLayout noResultText;
+    TextView keywordText;
+    TextView errorText;
     LinearLayoutManager linearLayoutManager;
     MusicListAdapter adapter;
     ArrayList<SimpleMusic> items = new ArrayList<>();
@@ -47,6 +52,9 @@ public class SearchResultFragment extends Fragment {
 
         musicListView = view.findViewById(R.id.musicListView);
         progressBar = view.findViewById(R.id.progressBar);
+        noResultText = view.findViewById(R.id.noResultText);
+        keywordText = view.findViewById(R.id.keywordText);
+        errorText = view.findViewById(R.id.errorText);
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         musicListView.setLayoutManager(linearLayoutManager);
         adapter = new MusicListAdapter(items);
@@ -55,15 +63,16 @@ public class SearchResultFragment extends Fragment {
         return view;
     }
 
-    public void search() {
-        musicListView.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
+    public void search(String keyword) {
+        setVisibilityState(LoadState.LOADING);
+        keywordText.setText("'" + keyword + "'");
 
         networkManager.getSearch(new RequestListener<ArrayList<SimpleMusic>>() {
             @Override
             public void getResult(ArrayList<SimpleMusic> musics) {
                 if (musics == null) {
-                    // TODO 오류 처리
+                    // 네트워크 문제
+                    setVisibilityState(LoadState.ERROR);
                     return;
                 }
 
@@ -72,10 +81,24 @@ public class SearchResultFragment extends Fragment {
                     items.add(m);
 
                 adapter.notifyDataSetChanged();
-                musicListView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.INVISIBLE);
+
+                if (items.size() > 0)
+                    setVisibilityState(LoadState.IDLE);
+                else
+                    setVisibilityState(LoadState.NO_RESULT);
             }
         });
+    }
+
+    private void setVisibilityState(LoadState state) {
+        musicListView.setVisibility(state == LoadState.IDLE ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(state == LoadState.LOADING ? View.VISIBLE : View.GONE);
+        noResultText.setVisibility(state == LoadState.NO_RESULT ? View.VISIBLE : View.GONE);
+        errorText.setVisibility(state == LoadState.ERROR ? View.VISIBLE : View.GONE);
+    }
+
+    private enum LoadState {
+        IDLE, LOADING, NO_RESULT, ERROR
     }
 
 }

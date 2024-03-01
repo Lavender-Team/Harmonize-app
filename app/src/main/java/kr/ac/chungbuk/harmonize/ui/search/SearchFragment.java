@@ -176,10 +176,10 @@ public class SearchFragment extends Fragment {
             );
         }
 
-        getAllResultFragment().search();
-        getMusicResultFragment().search();
-        getArtistResultFragment().search();
-        getKaraokeNumResultFragment().search();
+        getAllResultFragment().search(binding.etSearch.getText().toString());
+        getMusicResultFragment().search(binding.etSearch.getText().toString());
+        getArtistResultFragment().search(binding.etSearch.getText().toString());
+        getKaraokeNumResultFragment().search(binding.etSearch.getText().toString());
 
         binding.historyArea.setVisibility(View.INVISIBLE);
     }
