@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
 import kr.ac.chungbuk.harmonize.entity.SearchHistory;
@@ -125,12 +126,15 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemRemove(String item) {
                 historyAdapter.notifyDataSetChanged();
+                setEmptyTextVisibility();
             }
         });
         historyListView.setAdapter(historyAdapter);
 
-        searchViewModel.getKeyword().observe(getViewLifecycleOwner(), binding.etSearch::setText);
+        // 검색어 기록 불러오기
+        loadSearchHistory();
 
+        searchViewModel.getKeyword().observe(getViewLifecycleOwner(), binding.etSearch::setText);
 
         /* 검색 EditText */
         binding.tilSearch.setEndIconOnClickListener(new View.OnClickListener() {
@@ -166,7 +170,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void search() {
-        // TODO 검색어 저장 테스트
         if (!binding.etSearch.getText().toString().isEmpty()) {
             SearchHistoryService.save(
                     new SearchHistory(binding.etSearch.getText().toString(), OffsetDateTime.now())
@@ -178,11 +181,12 @@ public class SearchFragment extends Fragment {
         getArtistResultFragment().search();
         getKaraokeNumResultFragment().search();
 
-        binding.historyListView.setVisibility(View.INVISIBLE);
+        binding.historyArea.setVisibility(View.INVISIBLE);
     }
 
     public void focusSearchBox() {
-        binding.historyListView.setVisibility(View.VISIBLE);
+        binding.historyArea.setVisibility(View.VISIBLE);
+        loadSearchHistory();
     }
 
     public void showFilter() {
@@ -213,5 +217,16 @@ public class SearchFragment extends Fragment {
     private Fragment findTabFragmentByPosition(int position) {
         return getChildFragmentManager().findFragmentByTag("android:switcher:" +
                 binding.searchResultViewPager.getId() + ":" + tabAdapter.getItemId(position));
+    }
+
+    private void loadSearchHistory() {
+        List<SearchHistory> searchHistories = SearchHistoryService.findAll(10);
+        searchViewModel.setHistorys(searchHistories);
+        historyAdapter.notifyDataSetChanged();
+        setEmptyTextVisibility();
+    }
+
+    private void setEmptyTextVisibility() {
+        binding.emptyText.setVisibility(searchViewModel.getHistorys().size() > 0 ? View.GONE : View.VISIBLE);
     }
 }

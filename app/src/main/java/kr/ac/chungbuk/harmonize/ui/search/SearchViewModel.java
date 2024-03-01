@@ -1,24 +1,24 @@
 package kr.ac.chungbuk.harmonize.ui.search;
 
+import android.view.View;
+
+import androidx.databinding.Bindable;
 import androidx.databinding.ObservableArrayList;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import kr.ac.chungbuk.harmonize.entity.SearchHistory;
+
 public class SearchViewModel extends ViewModel {
 
-    private final MutableLiveData<String> keyword;
-    private ObservableArrayList<String> historys;
+    private final MutableLiveData<String> keyword = new MutableLiveData<>();
+    private ObservableArrayList<String> historys = new ObservableArrayList<>();
 
     public SearchViewModel() {
-        keyword = new MutableLiveData<>();
         keyword.setValue("");
-
-        historys = new ObservableArrayList<>();
-        historys.add("아이유");
-        historys.add("소주 한잔");
-        historys.add("장범준");
-        historys.add("신호등");
     }
 
     public LiveData<String> getKeyword() {
@@ -33,7 +33,11 @@ public class SearchViewModel extends ViewModel {
         return historys;
     }
 
-    public void addHistory(String keyword) {
-        historys.add(keyword);
+    public void setHistorys(List<SearchHistory> searchHistories) {
+        historys.clear();
+        for (var s : searchHistories) {
+            historys.add(s.getKeyword());
+        }
     }
+
 }
