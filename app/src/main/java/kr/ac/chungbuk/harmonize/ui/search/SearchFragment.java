@@ -29,7 +29,7 @@ import kr.ac.chungbuk.harmonize.utility.adapter.SearchHistoryAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.TabFragmentAdapter;
 import kr.ac.chungbuk.harmonize.utility.network.NetworkManager;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements IFilterApply {
 
     NetworkManager networkManager;
 
@@ -41,6 +41,7 @@ public class SearchFragment extends Fragment {
 
     private int indicatorWidth;
 
+    FilterValue filterState = new FilterValue();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -190,13 +191,27 @@ public class SearchFragment extends Fragment {
     }
 
     public void showFilter() {
+        // 검색 필터 Dialog 띄우기
         FilterDialog filterDialog = new FilterDialog();
-        filterDialog.show(getChildFragmentManager(), "filter");
 
-        //searchViewModel.addHistory("검색어");
-        //historyAdapter.notifyDataSetChanged();
+        // 전달할 이전 필터 설정 값
+        Bundle prevFilterArgs = new Bundle();
+        prevFilterArgs.putString("prevFilter", filterState.toString());
+        filterDialog.setArguments(prevFilterArgs);
+
+        filterDialog.show(getChildFragmentManager(), "filter");
     }
 
+    @Override
+    public void onApplyFilter(FilterValue filterValue) {
+        // FilterDialog에서 적용한 필터 설정 값을 받아서 적용
+        this.filterState = filterValue;
+        if (filterState.isDefaultState()) {
+            // TODO 필터 아이콘을 필터 기본값 여부에 따라 바꾸기
+        } else {
+            
+        }
+    }
 
     private SearchResultFragment getAllResultFragment() {
         return (SearchResultFragment) findTabFragmentByPosition(0);

@@ -6,11 +6,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 
-import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.ActivityMusicBinding;
-import kr.ac.chungbuk.harmonize.uicomponent.FragmentTwo;
 import kr.ac.chungbuk.harmonize.utility.adapter.TabFragmentAdapter;
 
 public class MusicActivity extends AppCompatActivity {
