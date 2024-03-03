@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="12dp"
-                android:text="username"
+                android:text="홍길동"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>

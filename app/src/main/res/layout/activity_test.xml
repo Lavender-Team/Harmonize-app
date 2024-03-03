@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="80dp"
         android:layout_marginHorizontal="24dp"
         android:text="로그인"
@@ -19,7 +19,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenGenderAge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="성별 연령대 선택"
@@ -28,7 +28,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenGenre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="선호 장르 선택"
@@ -37,7 +37,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenSignup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="회원가입"
@@ -46,7 +46,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenFindId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="아이디 찾기"
@@ -55,7 +55,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenFindPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="비밀번호 찾기"
@@ -64,7 +64,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenMusic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="24dp"
         android:text="음악 상세정보"

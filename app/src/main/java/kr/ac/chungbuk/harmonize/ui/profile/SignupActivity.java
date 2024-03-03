@@ -13,9 +13,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import kr.ac.chungbuk.harmonize.R;
 
 public class SignupActivity extends AppCompatActivity {
+
+    TextInputEditText etId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,15 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         ImageButton btnBack = findViewById(R.id.btnBack);
+        etId = findViewById(R.id.etId);
+
+        // LoginActivity에서 전달받은 아이디가 있다면 초기 값으로 설정
+        String receivedId = getIntent().getStringExtra("id");
+        if (receivedId != null) {
+            etId.setText(receivedId);
+        }
+        
+        // Event Listener 추가
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
