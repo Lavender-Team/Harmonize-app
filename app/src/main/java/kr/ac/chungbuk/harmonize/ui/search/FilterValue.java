@@ -67,7 +67,7 @@ public class FilterValue {
     }
 
     public Boolean isDefaultState() {
-        if (genderMale || genderFemale || genderMale)
+        if (genderMale || genderFemale || genderMixed)
             return false;
         if (!genre.equals("전체"))
             return false;
