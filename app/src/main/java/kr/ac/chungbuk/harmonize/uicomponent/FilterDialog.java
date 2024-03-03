@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -27,7 +28,7 @@ public class FilterDialog extends DialogFragment {
     private IFilterApply mCallback;
 
     MaterialButtonToggleGroup genderToggleGroup;
-    AppCompatButton btnApply;
+    AppCompatButton btnReset, btnApply;
 
     @Nullable
     @Override
@@ -36,14 +37,14 @@ public class FilterDialog extends DialogFragment {
 
         Spinner spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.spinner_genre, R.layout.genre_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.spinner_genre, R.layout.genre_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
 
 
         genderToggleGroup = view.findViewById(R.id.genderToggleGroup);
         btnApply = view.findViewById(R.id.btnApply);
+        btnReset = view.findViewById(R.id.btnReset);
 
         // 받아온 이전 필터 설정 값으로 초기화
         FilterValue prevFilter = new FilterValue();
@@ -57,6 +58,7 @@ public class FilterDialog extends DialogFragment {
         if (prevFilter.isGenderMixed())
             genderToggleGroup.check(R.id.genderMixed);
 
+        spinner.setSelection(getSpinnerSelectionIndex(prevFilter.getGenre()));
         
         
         // EventListener 추가
@@ -69,6 +71,27 @@ public class FilterDialog extends DialogFragment {
                     filterValue.setGenderFemale(isChecked);
                 else if (checkedId == R.id.genderMixed)
                     filterValue.setGenderMixed(isChecked);
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filterValue.setGenre(parent.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterValue.setDefault();
+                mCallback.onApplyFilter(filterValue);
+                dismiss();
             }
         });
 
@@ -95,4 +118,20 @@ public class FilterDialog extends DialogFragment {
         }
     }
 
+    private int getSpinnerSelectionIndex(String genre) {
+        return switch (genre) {
+            case "가요" -> 1;
+            case "팝송" -> 2;
+            case "발라드" -> 3;
+            case "랩/힙합" -> 4;
+            case "댄스" -> 5;
+            case "일본곡" -> 6;
+            case "R&B" -> 7;
+            case "OST" -> 8;
+            case "인디뮤직" -> 9;
+            case "트로트" -> 10;
+            case "어린이곡" -> 11;
+            default -> 0;
+        };
+    }
 }

@@ -12,6 +12,15 @@
         <item>전체</item>
         <item>가요</item>
         <item>팝송</item>
+        <item>발라드</item>
+        <item>랩/힙합</item>
+        <item>댄스</item>
+        <item>일본곡</item>
+        <item>R&amp;B</item>
+        <item>OST</item>
+        <item>인디뮤직</item>
+        <item>트로트</item>
+        <item>어린이곡</item>
     </string-array>
 
     <string-array name="seekbar_string">

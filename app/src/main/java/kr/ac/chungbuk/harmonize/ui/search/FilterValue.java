@@ -74,4 +74,9 @@ public class FilterValue {
 
         return true;
     }
+
+    public void setDefault() {
+        genderMale = genderFemale = genderMixed = false;
+        genre = "전체";
+    }
 }

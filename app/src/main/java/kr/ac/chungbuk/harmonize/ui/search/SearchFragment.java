@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
 import kr.ac.chungbuk.harmonize.entity.SearchHistory;
 import kr.ac.chungbuk.harmonize.service.SearchHistoryService;
@@ -207,9 +208,12 @@ public class SearchFragment extends Fragment implements IFilterApply {
         // FilterDialog에서 적용한 필터 설정 값을 받아서 적용
         this.filterState = filterValue;
         if (filterState.isDefaultState()) {
-            // TODO 필터 아이콘을 필터 기본값 여부에 따라 바꾸기
+            // 필터 아이콘을 필터 기본값 여부에 따라 바꾸기
+            binding.btnFilter.clearColorFilter();
+            binding.btnFilterCheck.setVisibility(View.GONE);
         } else {
-            
+            binding.btnFilter.setColorFilter(R.color.black);
+            binding.btnFilterCheck.setVisibility(View.VISIBLE);
         }
     }
 
