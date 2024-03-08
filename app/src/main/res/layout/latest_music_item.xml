@@ -10,13 +10,13 @@
     android:focusable="true">
 
     <FrameLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp">
+        android:layout_width="120dp"
+        android:layout_height="120dp">
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp">
 
@@ -50,7 +50,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginLeft="4dp"
         android:text="가수명"
-        android:textColor="@color/gray_3"
+        android:textColor="@color/gray_4"
         android:textSize="12dp" />
 
 </LinearLayout>
