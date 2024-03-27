@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_analytics"
-        android:name="kr.ac.chungbuk.harmonize.ui.dashboard.DashboardFragment"
+        android:name="kr.ac.chungbuk.harmonize.ui.analysis.AnalysisFragment"
         android:label="분석"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_analysis" />
 
     <fragment
         android:id="@+id/navigation_search"
