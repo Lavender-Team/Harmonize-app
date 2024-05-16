@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.analysis.VoiceRecordingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_arrow_back_black_28dp"
+            app:tint="@color/black"
+            android:contentDescription="닫기" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목소리 분석"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/purple_500"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="을 진행합니다"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24px"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="음역대 측정을 진행합니다."
+        android:textSize="14dp"
+        android:textColor="@color/gray_4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4px"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="지시에 따라 주세요."
+        android:textSize="14dp"
+        android:textColor="@color/gray_4" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp">
+
+        <!-- 아직 빈 공간 -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="30dp"
+        android:paddingBottom="6dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/white_ripple_button"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="내 음역대 직접 입력"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle_purple_button"
+            android:foreground="?selectableItemBackground"
+            android:src="@drawable/ic_mic_white_28dp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package kr.ac.chungbuk.harmonize.ui.analysis;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.bumptech.glide.load.engine.Resource;
 
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentAnalysisBinding;
+import kr.ac.chungbuk.harmonize.ui.test.TestActivity;
 
 public class AnalysisFragment extends Fragment {
 
@@ -76,6 +78,14 @@ public class AnalysisFragment extends Fragment {
                     binding.userDataToggleIcon.setImageResource(R.drawable.ic_arrow_drop_up);
                     binding.userDataToggleText.setTextColor(getResources().getColor(R.color.black, getContext().getTheme()));
                 }
+            }
+        });
+
+        // 목소리 재분석 버튼
+        binding.btnVoiceRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), VoiceRecordingActivity.class));
             }
         });
     }
