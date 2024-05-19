@@ -32,7 +32,26 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="노래방 번호"
+                    android:textSize="14dp"
+                    android:textColor="@color/gray_4"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TJ 62722"
+                    android:textSize="14dp"
+                    android:textColor="@color/purple_500"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="장르"
                     android:textSize="14dp"
@@ -51,7 +70,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="발매일"
                     android:textSize="14dp"
@@ -70,7 +89,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="길이"
                     android:textSize="14dp"
@@ -136,7 +155,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="성별"
                     android:textSize="14dp"
@@ -156,7 +175,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="유형"
                     android:textSize="14dp"
@@ -176,7 +195,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="활동년대"
                     android:textSize="14dp"
@@ -196,7 +215,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="국적"
                     android:textSize="14dp"

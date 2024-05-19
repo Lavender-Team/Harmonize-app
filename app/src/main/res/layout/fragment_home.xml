@@ -146,15 +146,26 @@
             android:paddingVertical="24dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginBottom="12dp"
-                android:layout_marginHorizontal="24dp"
-                android:text="장르별 맞춤 추천곡"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginHorizontal="24dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="장르별 맞춤 추천곡"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_ai_music"/>
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

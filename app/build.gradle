@@ -59,4 +59,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
     implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Excel Reader
+    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
 }
