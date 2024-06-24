@@ -139,6 +139,28 @@
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagFOLK"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="포크/블루스"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tagROCK"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="48px"
+            app:toggle_textPaddingHorizontal="30dp"
+            app:toggle_selectedBackgroundColor="@color/purple_500"
+            app:toggle_text="록/메탈"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
             android:id="@+id/tagBallade"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
