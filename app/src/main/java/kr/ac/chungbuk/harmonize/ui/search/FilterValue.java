@@ -4,70 +4,40 @@ import androidx.annotation.NonNull;
 
 import java.util.StringTokenizer;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class FilterValue {
 
-    private Boolean genderMale = false;
-    private Boolean genderFemale = false;
-    private Boolean genderMixed = false;
+    private Boolean typeSolo = false;
+    private Boolean typeGroup = false;
 
     private String genre = "전체";
 
     // TODO 음역대 추가
 
 
-    public boolean isGenderMale() {
-        return genderMale;
-    }
-
-    public void setGenderMale(Boolean genderMale) {
-        this.genderMale = genderMale;
-    }
-
-    public boolean isGenderFemale() {
-        return genderFemale;
-    }
-
-    public void setGenderFemale(Boolean genderFemale) {
-        this.genderFemale = genderFemale;
-    }
-
-    public boolean isGenderMixed() {
-        return genderMixed;
-    }
-
-    public void setGenderMixed(Boolean genderMixed) {
-        this.genderMixed = genderMixed;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     @NonNull
     @Override
     public String toString() {
-        return genderMale.toString() + "," +
-                genderFemale.toString() + "," +
-                genderMixed.toString() + "," +
+        return typeSolo.toString() + "," +
+                typeGroup.toString() + "," +
                 genre;
     }
 
     public void setFromString(String filterValue) {
         if (!filterValue.isEmpty()) {
             StringTokenizer st = new StringTokenizer(filterValue, ",");
-            genderMale = Boolean.parseBoolean(st.nextToken());
-            genderFemale = Boolean.parseBoolean(st.nextToken());
-            genderMixed = Boolean.parseBoolean(st.nextToken());
+            typeSolo = Boolean.parseBoolean(st.nextToken());
+            typeGroup = Boolean.parseBoolean(st.nextToken());
             genre = st.nextToken();
         }
     }
 
     public Boolean isDefaultState() {
-        if (genderMale || genderFemale || genderMixed)
+        if (typeSolo || typeGroup)
             return false;
         if (!genre.equals("전체"))
             return false;
@@ -76,7 +46,7 @@ public class FilterValue {
     }
 
     public void setDefault() {
-        genderMale = genderFemale = genderMixed = false;
+        typeSolo = typeGroup = false;
         genre = "전체";
     }
 }

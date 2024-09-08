@@ -1,8 +1,7 @@
-package kr.ac.chungbuk.harmonize.service;
+package kr.ac.chungbuk.harmonize.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.InputType;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import kr.ac.chungbuk.harmonize.config.AppContext;
 import kr.ac.chungbuk.harmonize.config.DatabaseHelper;
 import kr.ac.chungbuk.harmonize.entity.SearchHistory;
 
-public class SearchHistoryService {
+public class SearchHistoryDao {
 
     private static DatabaseHelper helper = new DatabaseHelper(
             AppContext.getAppContext(), "harmonize", null, 1

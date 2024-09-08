@@ -41,28 +41,21 @@
             app:singleSelection="false">
 
             <Button
-                android:id="@+id/genderMale"
+                android:id="@+id/typeSolo"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="72dp"
+                android:layout_width="108dp"
                 android:layout_height="54dp"
-                android:text="남성"
+                android:text="솔로"
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/genderFemale"
+                android:id="@+id/typeGroup"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="72dp"
+                android:layout_width="108dp"
                 android:layout_height="54dp"
-                android:text="여성"
+                android:text="그룹"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/genderMixed"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="72dp"
-                android:layout_height="54dp"
-                android:text="혼성"
-                android:textSize="12sp" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </LinearLayout>

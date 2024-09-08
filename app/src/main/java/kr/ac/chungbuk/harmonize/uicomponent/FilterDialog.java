@@ -51,12 +51,10 @@ public class FilterDialog extends DialogFragment {
         prevFilter.setFromString(getArguments().getString("prevFilter"));
         filterValue = prevFilter;
 
-        if (prevFilter.isGenderMale())
-            genderToggleGroup.check(R.id.genderMale);
-        if (prevFilter.isGenderFemale())
-            genderToggleGroup.check(R.id.genderFemale);
-        if (prevFilter.isGenderMixed())
-            genderToggleGroup.check(R.id.genderMixed);
+        if (prevFilter.getTypeSolo())
+            genderToggleGroup.check(R.id.typeSolo);
+        if (prevFilter.getTypeGroup())
+            genderToggleGroup.check(R.id.typeGroup);
 
         spinner.setSelection(getSpinnerSelectionIndex(prevFilter.getGenre()));
         
@@ -65,12 +63,10 @@ public class FilterDialog extends DialogFragment {
         genderToggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
             @Override
             public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (checkedId == R.id.genderMale)
-                    filterValue.setGenderMale(isChecked);
-                else if (checkedId == R.id.genderFemale)
-                    filterValue.setGenderFemale(isChecked);
-                else if (checkedId == R.id.genderMixed)
-                    filterValue.setGenderMixed(isChecked);
+                if (checkedId == R.id.typeSolo)
+                    filterValue.setTypeSolo(isChecked);
+                else if (checkedId == R.id.typeGroup)
+                    filterValue.setTypeGroup(isChecked);
             }
         });
 

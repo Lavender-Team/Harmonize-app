@@ -21,7 +21,7 @@ import java.util.List;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
 import kr.ac.chungbuk.harmonize.entity.SearchHistory;
-import kr.ac.chungbuk.harmonize.service.SearchHistoryService;
+import kr.ac.chungbuk.harmonize.dao.SearchHistoryDao;
 import kr.ac.chungbuk.harmonize.uicomponent.FilterDialog;
 import kr.ac.chungbuk.harmonize.uicomponent.SearchResultFragment;
 import kr.ac.chungbuk.harmonize.utility.adapter.OnItemClickListener;
@@ -173,7 +173,7 @@ public class SearchFragment extends Fragment implements IFilterApply {
 
     public void search() {
         if (!binding.etSearch.getText().toString().isEmpty()) {
-            SearchHistoryService.save(
+            SearchHistoryDao.save(
                     new SearchHistory(binding.etSearch.getText().toString(), OffsetDateTime.now())
             );
         }
@@ -239,7 +239,7 @@ public class SearchFragment extends Fragment implements IFilterApply {
     }
 
     private void loadSearchHistory() {
-        List<SearchHistory> searchHistories = SearchHistoryService.findAll(10);
+        List<SearchHistory> searchHistories = SearchHistoryDao.findAll(10);
         searchViewModel.setHistorys(searchHistories);
         historyAdapter.notifyDataSetChanged();
         setEmptyTextVisibility();

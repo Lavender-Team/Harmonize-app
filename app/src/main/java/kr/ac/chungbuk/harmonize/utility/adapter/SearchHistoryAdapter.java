@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.SearchHistoryBinding;
-import kr.ac.chungbuk.harmonize.service.SearchHistoryService;
+import kr.ac.chungbuk.harmonize.dao.SearchHistoryDao;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
             @Override
             public void onClick(View view) {
                 localDataSet.remove(item);
-                SearchHistoryService.delete(item);
+                SearchHistoryDao.delete(item);
                 removeListener.onItemRemove(item);
             }
         });
