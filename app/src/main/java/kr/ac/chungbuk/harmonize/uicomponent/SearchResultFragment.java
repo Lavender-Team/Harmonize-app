@@ -7,24 +7,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.ObservableArrayList;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import kr.ac.chungbuk.harmonize.R;
-import kr.ac.chungbuk.harmonize.databinding.FragmentSearchResultBinding;
+import kr.ac.chungbuk.harmonize.dto.MusicListDto;
+import kr.ac.chungbuk.harmonize.dto.SearchResultDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.network.NetworkManager;
-import kr.ac.chungbuk.harmonize.utility.network.event.RequestListener;
 
 public class SearchResultFragment extends Fragment {
 
@@ -57,37 +54,33 @@ public class SearchResultFragment extends Fragment {
         errorText = view.findViewById(R.id.errorText);
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         musicListView.setLayoutManager(linearLayoutManager);
-        adapter = new MusicListAdapter(items);
+        adapter = new MusicListAdapter(items, getActivity());
         musicListView.setAdapter(adapter);
 
         return view;
     }
 
-    public void search(String keyword) {
+    public void searchRequested(String query) {
         setVisibilityState(LoadState.LOADING);
-        keywordText.setText("'" + keyword + "'");
+        keywordText.setText("'" + query + "'");
+    }
 
-        networkManager.getSearch(new RequestListener<ArrayList<SimpleMusic>>() {
-            @Override
-            public void getResult(ArrayList<SimpleMusic> musics) {
-                if (musics == null) {
-                    // 네트워크 문제
-                    setVisibilityState(LoadState.ERROR);
-                    return;
-                }
+    public void searchFailed() {
+        setVisibilityState(LoadState.ERROR);
+    }
 
-                items.clear();
-                for (SimpleMusic m: musics)
-                    items.add(m);
+    public void searchCompleted(SearchResultDto searchResult) {
+        items.clear();
+        for (MusicListDto m : searchResult.getContent()) {
+            items.add(new SimpleMusic(m.getTitle(), m.getArtist(), m.getAlbumCover()));
+        }
 
-                adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
-                if (items.size() > 0)
-                    setVisibilityState(LoadState.IDLE);
-                else
-                    setVisibilityState(LoadState.NO_RESULT);
-            }
-        });
+        if (items.size() > 0)
+            setVisibilityState(LoadState.IDLE);
+        else
+            setVisibilityState(LoadState.NO_RESULT);
     }
 
     private void setVisibilityState(LoadState state) {

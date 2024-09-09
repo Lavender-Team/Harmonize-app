@@ -36,6 +36,49 @@ public class FilterValue {
         }
     }
 
+    public String getGroupType() {
+        if (typeSolo && !typeGroup)
+            return "SOLO";
+        else if (!typeSolo && typeGroup)
+            return "GROUP";
+        else
+            return "";
+    }
+
+    public String getGenreValue() {
+        switch (genre) {
+            case "가요":
+                return "KPOP";
+            case "팝송":
+                return "POP";
+            case "발라드":
+                return "BALLADE";
+            case "랩/힙합":
+                return "RAP";
+            case "댄스":
+                return "DANCE";
+            case "일본곡":
+                return "JPOP";
+            case "R&B":
+                return "RNB";
+            case "포크/블루스":
+                return "FOLK";
+            case "록/메탈":
+                return "ROCK";
+            case "OST":
+                return "OST";
+            case "인디뮤직":
+                return "INDIE";
+            case "트로트":
+                return "TROT";
+            case "어린이곡":
+                return "KID";
+            default:
+                return "";
+        }
+
+    }
+
     public Boolean isDefaultState() {
         if (typeSolo || typeGroup)
             return false;

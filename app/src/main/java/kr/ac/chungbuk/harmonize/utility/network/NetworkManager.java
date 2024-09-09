@@ -84,16 +84,16 @@ public class NetworkManager {
                 }) {
 
             @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String utf8String = new String(response.data, "UTF-8");
-                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    // log error
-                    return Response.error(new ParseError(e));
-                } catch (Exception e) {
-                    // log error
-                    return Response.error(new ParseError(e));
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        try {
+                            String utf8String = new String(response.data, "UTF-8");
+                            return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                        } catch (UnsupportedEncodingException e) {
+                            // log error
+                            return Response.error(new ParseError(e));
+                        } catch (Exception e) {
+                            // log error
+                            return Response.error(new ParseError(e));
                 }
             }
 

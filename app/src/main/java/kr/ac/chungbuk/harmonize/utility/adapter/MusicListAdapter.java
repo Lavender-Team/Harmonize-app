@@ -1,5 +1,8 @@
 package kr.ac.chungbuk.harmonize.utility.adapter;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,20 +11,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentActivity;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
-import kr.ac.chungbuk.harmonize.uicomponent.MusicListItemView;
 
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Holder> {
 
     ArrayList<SimpleMusic> items = new ArrayList<>();
+    FragmentActivity activity;
 
     public MusicListAdapter(ArrayList<SimpleMusic> items) {
         this.items = items;
     }
+
+    public MusicListAdapter(ArrayList<SimpleMusic> items, FragmentActivity activity) {
+        this.items = items;
+        this.activity = activity;
+    }
+
 
     @NonNull
     @Override
@@ -35,6 +49,13 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
         SimpleMusic item = items.get(position);
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtist());
+        if (activity != null) {
+            Glide.with(activity)
+                    .load(Domain.url(item.getCoverPath()))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(new ColorDrawable(Color.parseColor("#F6F6F6")))
+                    .into(holder.ivThumbnail);
+        }
     }
 
     @Override
@@ -43,8 +64,9 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        private TextView tvTitle, tvArtist;
-        private ImageView ivThumbnail;
+        private final TextView tvTitle;
+        private final TextView tvArtist;
+        private final ImageView ivThumbnail;
 
         public Holder(@NonNull View itemView) {
             super(itemView);

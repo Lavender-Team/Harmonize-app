@@ -2,6 +2,7 @@ package kr.ac.chungbuk.harmonize.ui.search;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,32 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.config.Domain;
+import kr.ac.chungbuk.harmonize.config.VolleySingleton;
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
+import kr.ac.chungbuk.harmonize.dto.MusicListDto;
+import kr.ac.chungbuk.harmonize.dto.SearchResultDto;
 import kr.ac.chungbuk.harmonize.entity.SearchHistory;
 import kr.ac.chungbuk.harmonize.dao.SearchHistoryDao;
 import kr.ac.chungbuk.harmonize.uicomponent.FilterDialog;
@@ -178,10 +200,60 @@ public class SearchFragment extends Fragment implements IFilterApply {
             );
         }
 
-        getAllResultFragment().search(binding.etSearch.getText().toString());
-        getMusicResultFragment().search(binding.etSearch.getText().toString());
-        getArtistResultFragment().search(binding.etSearch.getText().toString());
-        getKaraokeNumResultFragment().search(binding.etSearch.getText().toString());
+        String url = Domain.url(String.format("/api/music/search?query=%1$s",
+                binding.etSearch.getText().toString()));
+        if (!filterState.getGroupType().isEmpty())
+            url += "&groupType=" + filterState.getGroupType();
+        if (!filterState.getGenreValue().isEmpty())
+            url += "&genre=" + filterState.getGenreValue();
+
+        StringRequest searchRequest = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // 검색 결과 파싱
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<Map<String, SearchResultDto>>(){}.getType();
+                        Map<String, SearchResultDto> results = gson.fromJson(response, type);
+
+                        // 검색 결과 adapter 적용
+                        getAllResultFragment().searchCompleted(Objects.requireNonNull(results.get("all")));
+                        getMusicResultFragment().searchCompleted(Objects.requireNonNull(results.get("title")));
+                        getArtistResultFragment().searchCompleted(Objects.requireNonNull(results.get("artist")));
+                        getKaraokeNumResultFragment().searchCompleted(Objects.requireNonNull(results.get("karaokeNum")));
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        getAllResultFragment().searchFailed();
+                        getMusicResultFragment().searchFailed();
+                        getArtistResultFragment().searchFailed();
+                        getKaraokeNumResultFragment().searchFailed();
+                    }
+                }
+        ) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+
+        getAllResultFragment().searchRequested(binding.etSearch.getText().toString());
+        getMusicResultFragment().searchRequested(binding.etSearch.getText().toString());
+        getArtistResultFragment().searchRequested(binding.etSearch.getText().toString());
+        getKaraokeNumResultFragment().searchRequested(binding.etSearch.getText().toString());
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(searchRequest);
 
         binding.historyArea.setVisibility(View.INVISIBLE);
     }
