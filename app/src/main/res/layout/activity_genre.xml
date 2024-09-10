@@ -234,9 +234,9 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="36dp">
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="저장"
             style="@style/Widget.AppCompat.Button.Colored"
             android:background="@drawable/big_purple_button"
