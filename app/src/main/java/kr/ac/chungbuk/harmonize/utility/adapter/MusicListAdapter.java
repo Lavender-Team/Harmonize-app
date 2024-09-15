@@ -1,12 +1,13 @@
 package kr.ac.chungbuk.harmonize.utility.adapter;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,12 @@ import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Holder> {
 
+    public interface OnListItemSelectedInterface {
+        void onItemSelected(View v, int position);
+    }
+
+    private OnListItemSelectedInterface mListener;
+
     ArrayList<SimpleMusic> items = new ArrayList<>();
     FragmentActivity activity;
 
@@ -34,6 +41,13 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
     public MusicListAdapter(ArrayList<SimpleMusic> items, FragmentActivity activity) {
         this.items = items;
         this.activity = activity;
+    }
+
+    public MusicListAdapter(ArrayList<SimpleMusic> items, FragmentActivity activity,
+                            OnListItemSelectedInterface mListener) {
+        this.items = items;
+        this.activity = activity;
+        this.mListener = mListener;
     }
 
 
@@ -51,7 +65,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
         holder.tvArtist.setText(item.getArtist());
         if (activity != null) {
             Glide.with(activity)
-                    .load(Domain.url(item.getCoverPath()))
+                    .load(Domain.url(item.getAlbumCover()))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(new ColorDrawable(Color.parseColor("#F6F6F6")))
                     .into(holder.ivThumbnail);
@@ -67,12 +81,22 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
         private final TextView tvTitle;
         private final TextView tvArtist;
         private final ImageView ivThumbnail;
+        private final LinearLayout musicListItem;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvArtist = itemView.findViewById(R.id.tvArtist);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
+            musicListItem = itemView.findViewById(R.id.musicListItem);
+
+            musicListItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemSelected(v, getAdapterPosition());
+                }
+            });
+
         }
     }
 }

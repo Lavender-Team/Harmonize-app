@@ -11,21 +11,30 @@ import lombok.Setter;
 public class SimpleMusic {
 
     @Expose
+    private Long musicId;
+    @Expose
     private String title;
     @Expose
     private String artist;
     @Expose
-    private String coverPath;
+    private String albumCover;
 
     public SimpleMusic(String title, String artist) {
         this.title = title;
         this.artist = artist;
     }
 
-    public SimpleMusic(String title, String artist, String coverPath) {
+    public SimpleMusic(String title, String artist, String albumCover) {
         this.title = title;
         this.artist = artist;
-        this.coverPath = coverPath;
+        this.albumCover = albumCover;
+    }
+
+    public SimpleMusic(Long musicId, String title, String artist, String albumCover) {
+        this.musicId = musicId;
+        this.title = title;
+        this.artist = artist;
+        this.albumCover = albumCover;
     }
 
 }

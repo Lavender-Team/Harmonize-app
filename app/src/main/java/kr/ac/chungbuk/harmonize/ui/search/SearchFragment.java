@@ -179,6 +179,7 @@ public class SearchFragment extends Fragment implements IFilterApply {
                 return false;
             }
         });
+
     }
 
     @Override

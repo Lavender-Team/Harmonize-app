@@ -1,5 +1,6 @@
 package kr.ac.chungbuk.harmonize.uicomponent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,11 @@ import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.dto.SearchResultDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
+import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
+import kr.ac.chungbuk.harmonize.ui.test.TestActivity;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
-import kr.ac.chungbuk.harmonize.utility.network.NetworkManager;
 
 public class SearchResultFragment extends Fragment {
-
-    NetworkManager networkManager;
 
     RecyclerView musicListView;
     ProgressBar progressBar;
@@ -35,11 +35,6 @@ public class SearchResultFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     MusicListAdapter adapter;
     ArrayList<SimpleMusic> items = new ArrayList<>();
-
-
-    public SearchResultFragment() {
-        networkManager = NetworkManager.getInstance(getContext());
-    }
 
 
     @Nullable
@@ -54,7 +49,16 @@ public class SearchResultFragment extends Fragment {
         errorText = view.findViewById(R.id.errorText);
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         musicListView.setLayoutManager(linearLayoutManager);
-        adapter = new MusicListAdapter(items, getActivity());
+        adapter = new MusicListAdapter(items,
+                getActivity(),
+                new MusicListAdapter.OnListItemSelectedInterface() {
+                    @Override
+                    public void onItemSelected(View v, int position) {
+                        Intent intent = new Intent(getActivity(), MusicActivity.class);
+                        intent.putExtra("musicId", items.get(position).getMusicId());
+                        startActivity(intent);
+                    }
+                });
         musicListView.setAdapter(adapter);
 
         return view;
@@ -72,7 +76,7 @@ public class SearchResultFragment extends Fragment {
     public void searchCompleted(SearchResultDto searchResult) {
         items.clear();
         for (MusicListDto m : searchResult.getContent()) {
-            items.add(new SimpleMusic(m.getTitle(), m.getArtist(), m.getAlbumCover()));
+            items.add(new SimpleMusic(m.getId(), m.getTitle(), m.getArtist(), m.getAlbumCover()));
         }
 
         adapter.notifyDataSetChanged();

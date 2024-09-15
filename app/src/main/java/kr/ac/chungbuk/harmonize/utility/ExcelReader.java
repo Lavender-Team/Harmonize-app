@@ -38,8 +38,6 @@ public class ExcelReader {
                 Cell timeCell = row.getCell(1); // assuming 'time' is in the second column
                 Cell pitchPointCell = row.getCell(2); // assuming 'pitch_point' is in the third column
 
-                Log.d("PitchGraphTest", " " + sheet);
-
                 if (timeCell != null && pitchPointCell != null) {
                     timeList.add(timeCell.getNumericCellValue());
                     pitchPointList.add(pitchPointCell.getNumericCellValue());
