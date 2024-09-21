@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,7 +23,12 @@ public class GsonDateSupport {
             public LocalDateTime deserialize(JsonElement json, Type type,
                                              JsonDeserializationContext jsonDeserializationContext)
                     throws JsonParseException {
-                return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+
+                try {
+                    return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+                } catch (Exception e) {
+                    return null;
+                }
             }
         });
 

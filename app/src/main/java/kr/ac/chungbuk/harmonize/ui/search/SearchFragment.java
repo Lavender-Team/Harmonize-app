@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -195,11 +196,15 @@ public class SearchFragment extends Fragment implements IFilterApply {
     }
 
     public void search() {
-        if (!binding.etSearch.getText().toString().isEmpty()) {
-            SearchHistoryDao.save(
-                    new SearchHistory(binding.etSearch.getText().toString(), OffsetDateTime.now())
-            );
+        if (binding.etSearch.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), "검색어를 입력하세요.", Toast.LENGTH_LONG).show();
+            return;
         }
+
+        // 검색 기록 저장
+        SearchHistoryDao.save(
+                new SearchHistory(binding.etSearch.getText().toString(), OffsetDateTime.now())
+        );
 
         String url = Domain.url(String.format("/api/music/search?query=%1$s",
                 binding.etSearch.getText().toString()));

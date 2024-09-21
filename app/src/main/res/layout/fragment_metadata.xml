@@ -38,10 +38,10 @@
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvKaraokeNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TJ 62722"
                     android:textSize="14dp"
                     android:textColor="@color/purple_500"/>
             </LinearLayout>
@@ -57,10 +57,10 @@
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvGenre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="발라드"
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -76,14 +76,16 @@
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvReleaseDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="2019.09.25"
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
+            <!-- 아직 개발 안됨 -->
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -133,13 +135,14 @@
                     app:cardCornerRadius="50dp"
                     app:cardElevation="0dp">
                     <ImageView
-                        android:id="@+id/ivThumbnail"
+                        android:id="@+id/ivProfileImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/gray_background"
                         />
                 </androidx.cardview.widget.CardView>
                 <TextView
+                    android:id="@+id/tvArtist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -149,6 +152,7 @@
                     android:textColor="@color/black"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/llMembers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
@@ -157,14 +161,15 @@
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="성별"
+                    android:text="멤버"
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvMembers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="혼성"
+                    android:text=""
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -181,14 +186,15 @@
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvGroupType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="그룹"
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/llAgency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
@@ -197,40 +203,21 @@
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="활동년대"
+                    android:text="소속사"
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvAgency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="2010, 2020 년대"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="국적"
-                    android:textSize="14dp"
-                    android:textColor="@color/gray_4"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="대한민국"
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -241,81 +228,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="원곡 목소리 특징"
+                android:text="원곡 특징"
                 android:textSize="16dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/fbTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
                 app:flexWrap="wrap">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="허스키한"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/genre_tag"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="활력넘치는"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/genre_tag"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="밝은"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/genre_tag"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="허스키한"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/genre_tag"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="활력넘치는"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/genre_tag"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="밝은"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/genre_tag"/>
             </com.google.android.flexbox.FlexboxLayout>
         </LinearLayout>
 

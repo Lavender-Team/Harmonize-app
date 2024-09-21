@@ -36,6 +36,8 @@ public class MusicActivity extends AppCompatActivity {
 
     private ActivityMusicBinding binding;
 
+    MetadataFragment metadataFragment;
+
     private int indicatorWidth;
 
     @Override
@@ -62,10 +64,16 @@ public class MusicActivity extends AppCompatActivity {
 
         /* 음악 정보 TabLayout */
         TabFragmentAdapter tabAdapter = new TabFragmentAdapter(getSupportFragmentManager());
-        tabAdapter.addFragment(MetadataFragment.newInstance("param1", "param2"), "노래 정보");
+
+        // 노래 정보 Fragment
+        metadataFragment = MetadataFragment.newInstance();
+        tabAdapter.addFragment(metadataFragment, "노래 정보");
+
+
         tabAdapter.addFragment(PitchdataFragment.newInstance("param1", "param2"), "음역대");
         tabAdapter.addFragment(SingFragment.newInstance("param1", "param2"), "따라 부르기");
         binding.detailViewPager.setAdapter(tabAdapter);
+        binding.detailViewPager.setOffscreenPageLimit(3);
         binding.typeTabLayout.setupWithViewPager(binding.detailViewPager);
 
         // Determine tab indicator width at runtime
@@ -114,12 +122,14 @@ public class MusicActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         // MusicDto 파싱
                         Gson gson = GsonDateSupport.getInstance();
-                        Log.d("gsontest","wefwefwef");
                         MusicDto music = gson.fromJson(response, MusicDto.class);
-                        Log.d("gsontest","123123");
 
                         binding.tvTitle.setText(music.getTitle());
                         binding.tvArtist.setText(music.getArtist());
+
+                        // 노래 정보 Fragment 설정
+                        if (metadataFragment != null)
+                            metadataFragment.setData(music);
 
                         // 앨범 커버 로드
                         Glide.with(getApplicationContext())

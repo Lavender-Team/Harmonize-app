@@ -13,7 +13,9 @@ public class MusicDto {
     private Long id;
     private String title;
     private String artist;
+    private GroupDto group;
     private String genre;
+    private String genreName;
     private String karaokeNum;
     private LocalDateTime releaseDate;
     private String albumCover;

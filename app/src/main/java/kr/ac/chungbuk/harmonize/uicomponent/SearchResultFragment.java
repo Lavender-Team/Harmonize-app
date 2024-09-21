@@ -22,7 +22,6 @@ import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.dto.SearchResultDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
-import kr.ac.chungbuk.harmonize.ui.test.TestActivity;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 
 public class SearchResultFragment extends Fragment {
