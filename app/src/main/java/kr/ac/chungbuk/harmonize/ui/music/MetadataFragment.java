@@ -5,24 +5,18 @@ import static kr.ac.chungbuk.harmonize.config.AppContext.getAppContext;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.core.content.res.ResourcesCompat;
-import androidx.databinding.ObservableArrayList;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.databinding.ObservableArrayList;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.google.android.flexbox.FlexboxLayout;
-
-import org.apache.commons.codec.binary.StringUtils;
-import org.apache.poi.util.StringUtil;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;

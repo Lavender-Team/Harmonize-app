@@ -3,7 +3,6 @@ package kr.ac.chungbuk.harmonize.dto;
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
-import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;

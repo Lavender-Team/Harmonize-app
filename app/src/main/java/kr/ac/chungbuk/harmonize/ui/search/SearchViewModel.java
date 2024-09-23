@@ -1,8 +1,5 @@
 package kr.ac.chungbuk.harmonize.ui.search;
 
-import android.view.View;
-
-import androidx.databinding.Bindable;
 import androidx.databinding.ObservableArrayList;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

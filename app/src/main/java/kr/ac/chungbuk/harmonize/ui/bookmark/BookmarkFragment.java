@@ -6,17 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableList;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
-import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentBookmarkBinding;
-import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 
 public class BookmarkFragment extends Fragment {

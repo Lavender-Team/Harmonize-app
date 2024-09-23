@@ -1,18 +1,13 @@
 package kr.ac.chungbuk.harmonize.ui.music;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import kr.ac.chungbuk.harmonize.R;
-import kr.ac.chungbuk.harmonize.uicomponent.PitchGraphView;
 
 /**
  * A simple {@link Fragment} subclass.

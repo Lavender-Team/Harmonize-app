@@ -2,7 +2,6 @@ package kr.ac.chungbuk.harmonize.ui.search;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -30,9 +28,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.time.OffsetDateTime;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -40,11 +36,10 @@ import java.util.Objects;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.SearchHistoryDao;
 import kr.ac.chungbuk.harmonize.databinding.FragmentSearchBinding;
-import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.dto.SearchResultDto;
 import kr.ac.chungbuk.harmonize.entity.SearchHistory;
-import kr.ac.chungbuk.harmonize.dao.SearchHistoryDao;
 import kr.ac.chungbuk.harmonize.uicomponent.FilterDialog;
 import kr.ac.chungbuk.harmonize.uicomponent.SearchResultFragment;
 import kr.ac.chungbuk.harmonize.utility.adapter.OnItemClickListener;
@@ -203,7 +198,7 @@ public class SearchFragment extends Fragment implements IFilterApply {
 
         // 검색 기록 저장
         SearchHistoryDao.save(
-                new SearchHistory(binding.etSearch.getText().toString(), OffsetDateTime.now())
+                new SearchHistory(binding.etSearch.getText().toString(), LocalDateTime.now())
         );
 
         String url = Domain.url(String.format("/api/music/search?query=%1$s",

@@ -2,32 +2,24 @@ package kr.ac.chungbuk.harmonize.ui.profile;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
 import kr.ac.chungbuk.harmonize.databinding.ActivitySignupBinding;
@@ -67,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitSignupForm();
+                signup();
             }
         });
     }
@@ -86,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
         return false;
     }
 
-    private void submitSignupForm() {
+    private void signup() {
         clearError();
 
         if (checkBeforeSubmit())

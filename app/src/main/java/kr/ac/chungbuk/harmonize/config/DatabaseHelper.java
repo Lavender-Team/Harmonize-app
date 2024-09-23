@@ -15,15 +15,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         /* 검색 기록 테이블 생성 */
-        String query = """
+        String searchHistoryQuery = """
                 CREATE TABLE IF NOT EXISTS search_history (
-                    "id"    INTEGER NOT NULL,
+                    "id"        INTEGER NOT NULL,
                     "keyword"   TEXT NOT NULL,
                     "created_at"    TEXT NOT NULL,
                     PRIMARY KEY("id" AUTOINCREMENT)
                 );
                 """;
-        database.execSQL(query);
+        database.execSQL(searchHistoryQuery);
+
+        /* 로그인 정보 테이블 생성 */
+        String authQuery = """
+                CREATE TABLE IF NOT EXISTS auth (
+                    "token"     TEXT NOT NULL,
+                    "user_id"    INTEGER NOT NULL,
+                    "nickname"  TEXT NOT NULL,
+                    "gender"    TEXT NOT NULL,
+                    "age"       INTEGER NOT NULL,
+                    "genre"     TEXT NOT NULL,
+                    "created_at"    TEXT NOT NULL,
+                    PRIMARY KEY("token")
+                );
+                """;
+        database.execSQL(authQuery);
     }
 
     @Override

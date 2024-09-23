@@ -2,20 +2,16 @@ package kr.ac.chungbuk.harmonize.ui.analysis;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.bumptech.glide.load.engine.Resource;
-
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentAnalysisBinding;
-import kr.ac.chungbuk.harmonize.ui.test.TestActivity;
 
 public class AnalysisFragment extends Fragment {
 

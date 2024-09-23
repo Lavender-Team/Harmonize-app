@@ -1,8 +1,6 @@
 package kr.ac.chungbuk.harmonize.ui.bookmark;
 
 import androidx.databinding.ObservableArrayList;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;

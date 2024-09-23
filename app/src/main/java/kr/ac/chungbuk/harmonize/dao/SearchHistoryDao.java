@@ -3,7 +3,7 @@ package kr.ac.chungbuk.harmonize.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class SearchHistoryDao {
 
             results.add(new SearchHistory(
                     keyword,
-                    OffsetDateTime.parse(createdAt)
+                    LocalDateTime.parse(createdAt)
             ));
         }
         return results;

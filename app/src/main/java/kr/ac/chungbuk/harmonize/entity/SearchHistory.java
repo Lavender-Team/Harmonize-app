@@ -1,5 +1,6 @@
 package kr.ac.chungbuk.harmonize.entity;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import lombok.Getter;
@@ -13,12 +14,12 @@ import lombok.Setter;
 public class SearchHistory {
 
     private String keyword;
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
     public SearchHistory() {
     }
 
-    public SearchHistory(String keyword, OffsetDateTime createdAt) {
+    public SearchHistory(String keyword, LocalDateTime createdAt) {
         this.keyword = keyword;
         this.createdAt = createdAt;
     }
