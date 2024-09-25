@@ -21,7 +21,9 @@ import java.util.Map;
 import kr.ac.chungbuk.harmonize.MainActivity;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.ActivityGenreBinding;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton;
 
 public class GenreActivity extends AppCompatActivity {
@@ -71,11 +73,6 @@ public class GenreActivity extends AppCompatActivity {
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "TODO: 지금 로그인과 상관 없이 userId 2번 유저를 수정하도록 구현돼있음", Toast.LENGTH_LONG);
-                toast.show();
-
                 saveSelectedGenres();
             }
         });
@@ -91,10 +88,17 @@ public class GenreActivity extends AppCompatActivity {
 
         StringRequest updateRequest = new StringRequest(
                 Request.Method.PUT,
-                Domain.url("/api/user/2"),
+                Domain.url("/api/user/"+AuthDao.getUserId()),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        // 로컬(SQLite DB)에도 선호 장르를 저장
+                        try {
+                            AuthDto authDto = AuthDao.find();
+                            authDto.setGenreValue(selectedGenres);
+                            AuthDao.save(authDto);
+                        } catch (Exception ignored) {}
+
                         // 성공시 메인 액티비티 위 모든 액티비티 종료 및 메인 액티비티 열기
                         Intent intent = new Intent(GenreActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
@@ -110,6 +114,14 @@ public class GenreActivity extends AppCompatActivity {
                     }
                 }
         ) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

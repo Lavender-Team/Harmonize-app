@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -41,7 +42,7 @@ public class AuthDao {
         database.close();
     }
 
-    public static AuthDto find() {
+    public static AuthDto find() throws Exception {
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor cursor = database.rawQuery(
                 "SELECT token, user_id, nickname, gender, age, genre, created_at FROM auth",
@@ -51,7 +52,8 @@ public class AuthDao {
         if (cursor.getCount() <= 0) {
             // 저장된 토큰이 존재하지 않으면
             cursor.close();
-            return null;
+            database.close();
+            throw new Exception("로그인되지 않은 상태입니다.");
         }
 
         cursor.moveToNext();
@@ -64,9 +66,65 @@ public class AuthDao {
         authDto.setGenre(parseList(cursor.getString(5)));
         authDto.setCreatedAt(LocalDateTime.parse(cursor.getString(6)));
 
+        cursor.close();
+        database.close();
+
+        // 로그인한 날로부터 경과일 확인
+        long secondsBetween = ChronoUnit.SECONDS.between(authDto.getCreatedAt(), LocalDateTime.now());
+        if (secondsBetween >= 604800) {
+            throw new Exception("토큰 유효기한 초과 : 604800초 (7일) 이상 경과하였습니다.");
+        }
+
         return authDto;
     }
 
+    public static void delete() {
+        SQLiteDatabase database = helper.getWritableDatabase();
+        database.execSQL("DELETE FROM auth;");
+        database.close();
+    }
+
+    public static String getToken() {
+        SQLiteDatabase database = helper.getWritableDatabase();
+        Cursor cursor = database.rawQuery(
+                "SELECT token, user_id, nickname, gender, age, genre, created_at FROM auth",
+                null
+        );
+
+        if (cursor.getCount() <= 0) {
+            // 저장된 토큰이 존재하지 않으면
+            cursor.close();
+            database.close();
+            return "";
+        }
+
+        cursor.moveToNext();
+        String token = cursor.getString(0);
+        cursor.close();
+        database.close();
+        return token;
+    }
+
+    public static String getUserId() {
+        SQLiteDatabase database = helper.getWritableDatabase();
+        Cursor cursor = database.rawQuery(
+                "SELECT token, user_id, nickname, gender, age, genre, created_at FROM auth",
+                null
+        );
+
+        if (cursor.getCount() <= 0) {
+            // 저장된 유저 ID가 존재하지 않으면
+            cursor.close();
+            database.close();
+            return "";
+        }
+
+        cursor.moveToNext();
+        long userId = cursor.getLong(1);
+        cursor.close();
+        database.close();
+        return Long.toString(userId);
+    }
 
     private static List<String> parseList(String s) {
         List<String> output = new ArrayList<>();
