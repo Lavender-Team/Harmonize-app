@@ -2,6 +2,7 @@ package kr.ac.chungbuk.harmonize.ui.music;
 
 import static kr.ac.chungbuk.harmonize.config.AppContext.getAppContext;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -27,8 +28,9 @@ import kr.ac.chungbuk.harmonize.databinding.FragmentMetadataBinding;
 import kr.ac.chungbuk.harmonize.dto.ArtistDto;
 import kr.ac.chungbuk.harmonize.dto.GroupDto;
 import kr.ac.chungbuk.harmonize.dto.MusicDto;
+import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
-import kr.ac.chungbuk.harmonize.utility.adapter.LatestMusicListAdapter;
+import kr.ac.chungbuk.harmonize.utility.adapter.RecentMusicListAdapter;
 
 public class MetadataFragment extends Fragment {
 
@@ -47,9 +49,9 @@ public class MetadataFragment extends Fragment {
 
     RecyclerView relatedMusicListView;
     LinearLayoutManager relatedMusicLayoutManager;
-    LatestMusicListAdapter relatedMusicAdapter;
+    RecentMusicListAdapter relatedMusicAdapter;
 
-    private ObservableArrayList<SimpleMusic> relatedMusics = new ObservableArrayList<>();
+    private ObservableArrayList<MusicListDto> relatedMusics = new ObservableArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,17 +64,25 @@ public class MetadataFragment extends Fragment {
 
         /* 이 노래와 비슷한 곡들 */
         relatedMusicLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        relatedMusicAdapter = new LatestMusicListAdapter(relatedMusics);
+        relatedMusicAdapter = new RecentMusicListAdapter(relatedMusics,
+                new RecentMusicListAdapter.OnItemSelectedInterface() {
+                @Override
+                public void onItemSelected(View v, long musicId) {
+                    Intent intent = new Intent(getActivity(), MusicActivity.class);
+                    intent.putExtra("musicId", musicId);
+                    startActivity(intent);
+                }
+            });
         relatedMusicListView.setLayoutManager(relatedMusicLayoutManager);
         relatedMusicListView.setAdapter(relatedMusicAdapter);
 
 
         relatedMusics.clear();
-        relatedMusics.add(new SimpleMusic("사랑할 수 밖에", "볼빨간 사춘기"));
+        /*relatedMusics.add(new SimpleMusic("사랑할 수 밖에", "볼빨간 사춘기"));
         relatedMusics.add(new SimpleMusic("화이트(White)", "폴킴"));
         relatedMusics.add(new SimpleMusic("주저하는 연인들을 위해", "잔나비"));
         relatedMusics.add(new SimpleMusic("사랑할 수 밖에", "볼빨간 사춘기"));
-        relatedMusics.add(new SimpleMusic("화이트(White)", "폴킴"));
+        relatedMusics.add(new SimpleMusic("화이트(White)", "폴킴"));*/
         relatedMusicAdapter.notifyDataSetChanged();
 
         return root;

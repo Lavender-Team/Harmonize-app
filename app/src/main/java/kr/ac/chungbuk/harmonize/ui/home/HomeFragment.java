@@ -3,7 +3,6 @@ package kr.ac.chungbuk.harmonize.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
 import kr.ac.chungbuk.harmonize.utility.adapter.ArtistListAdapter;
-import kr.ac.chungbuk.harmonize.utility.adapter.LatestMusicListAdapter;
+import kr.ac.chungbuk.harmonize.utility.adapter.RecentMusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListShadowAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.RankAdapter;
@@ -43,6 +42,7 @@ import kr.ac.chungbuk.harmonize.utility.adapter.RankAdapter;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    HomeViewModel homeViewModel;
 
     LinearLayoutManager homeRecommendLinearLayoutManager;
     LinearLayoutManager artistLayoutManager;
@@ -53,14 +53,13 @@ public class HomeFragment extends Fragment {
     ArtistListAdapter artistAdapter;
     MusicListAdapter genreMusicAdapter;
     RankAdapter rankMusicAdapter;
-    LatestMusicListAdapter recentMusicAdapter;
+    RecentMusicListAdapter recentMusicAdapter;
 
     Handler sliderHandler = new Handler();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -100,7 +99,15 @@ public class HomeFragment extends Fragment {
 
         /* 최신 음악 */
         recentMusicLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recentMusicAdapter = new LatestMusicListAdapter(homeViewModel.getLatestMusics());
+        recentMusicAdapter = new RecentMusicListAdapter(new ArrayList<>(),
+                new RecentMusicListAdapter.OnItemSelectedInterface() {
+                @Override
+                public void onItemSelected(View v, long musicId) {
+                    Intent intent = new Intent(getActivity(), MusicActivity.class);
+                    intent.putExtra("musicId", musicId);
+                    startActivity(intent);
+                }
+            });
         binding.latestMusicListView.setLayoutManager(recentMusicLayoutManager);
         binding.latestMusicListView.setAdapter(recentMusicAdapter);
 
@@ -117,41 +124,18 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        StringRequest rankMusicRequest = new StringRequest(
-                Request.Method.GET,
-                Domain.url("/api/music/rank"),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        CommonMusicResultDto rankMusicResult = gson.fromJson(response, CommonMusicResultDto.class);
-
-                        rankMusicAdapter.setMusic(rankMusicResult.getContent());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(
-                                getContext(),
-                                "인기곡 순위를 가져오는 중 오류가 발생하였습니다.",
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                }
-        ) {
+        homeViewModel.fetchRankMusic(new HomeViewModel.OnRecentMusicLoaded() {
             @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String utf8String = new String(response.data, "UTF-8");
-                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } catch (Exception e) {
-                    return Response.error(new ParseError(e));
-                }
+            public void setMusics(List<MusicListDto> musics) {
+                rankMusicAdapter.setMusic(musics);
             }
-        };
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(rankMusicRequest);
+        });
+
+        homeViewModel.fetchRecentMusic(new HomeViewModel.OnRecentMusicLoaded() {
+            @Override
+            public void setMusics(List<MusicListDto> musics) {
+                recentMusicAdapter.setMusics(musics);
+            }
+        });
     }
 }

@@ -276,7 +276,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             tools:itemCount="1"
-            tools:listitem="@layout/latest_music_item"
+            tools:listitem="@layout/recent_music_item"
             />
 
     </LinearLayout>
