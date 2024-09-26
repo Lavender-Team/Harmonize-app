@@ -79,6 +79,9 @@ public class MetadataFragment extends Fragment {
     }
 
     public void setData(MusicDto music) {
+        if (music == null || binding == null)
+            return;
+
         // 노래방 번호
         binding.tvKaraokeNum.setText(music.getKaraokeNum());
         // 장르

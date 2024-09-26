@@ -10,34 +10,39 @@
     android:nestedScrollingEnabled="false">
 
     <kr.ac.chungbuk.harmonize.uicomponent.RankItemView
+        android:id="@+id/firstView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        app:rank="1"
-        app:title="모든날, 모든순간(Every Day, Every Moment)"
-        app:artist="폴킴" />
+        android:clickable="true"
+        android:focusable="true"
+        />
 
     <kr.ac.chungbuk.harmonize.uicomponent.RankItemView
+        android:id="@+id/secondView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        app:rank="2"
-        app:title="신호등"
-        app:artist="이무진" />
+        android:clickable="true"
+        android:focusable="true"
+        />
 
     <kr.ac.chungbuk.harmonize.uicomponent.RankItemView
+        android:id="@+id/thirdView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        app:rank="3"
-        app:title="잘지내자, 우리(여름날우리 X 로이킴)"
-        app:artist="로이킴" />
+        android:clickable="true"
+        android:focusable="true"
+        />
 
     <kr.ac.chungbuk.harmonize.uicomponent.RankItemView
+        android:id="@+id/fourthView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rank="4"
-        app:title="어디에도"
-        app:artist="MC THE MAX" />
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        />
 
 </LinearLayout>

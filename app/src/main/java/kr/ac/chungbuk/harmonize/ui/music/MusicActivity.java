@@ -46,13 +46,6 @@ public class MusicActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        /* Intent로 부터 액티비티에 표시할 음악의 musicId 받기 */
-        Intent intent = getIntent();
-        long musicId = intent.getLongExtra("musicId", -1);
-        if (musicId != -1) { // musicId가 정상적으로 전달되면 음악 상세정보 보기
-            fetchMusic(musicId);
-        }
-
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +102,13 @@ public class MusicActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) { }
         });
 
+
+        /* Intent로 부터 액티비티에 표시할 음악의 musicId 받기 */
+        Intent intent = getIntent();
+        long musicId = intent.getLongExtra("musicId", -1);
+        if (musicId != -1) { // musicId가 정상적으로 전달되면 음악 상세정보 보기
+            fetchMusic(musicId);
+        }
     }
 
     private void fetchMusic(long musicId) {
