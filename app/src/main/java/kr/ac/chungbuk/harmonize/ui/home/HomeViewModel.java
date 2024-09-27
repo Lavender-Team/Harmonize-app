@@ -31,7 +31,7 @@ import lombok.Getter;
 
 public class HomeViewModel extends ViewModel {
 
-    public interface OnRecentMusicLoaded {
+    public interface OnMusicLoaded {
         void setMusics(List<MusicListDto> musics);
     }
 
@@ -40,7 +40,7 @@ public class HomeViewModel extends ViewModel {
     @Getter
     private ObservableArrayList<SimpleMusic> artists = new ObservableArrayList<>();
     @Getter
-    private ObservableArrayList<SimpleMusic> genreMusics = new ObservableArrayList<>();
+    private ObservableArrayList<MusicListDto> genreMusics = new ObservableArrayList<>();
 
     public HomeViewModel() {
         homeRecommendMusics.add(new SimpleMusic("사건의 지평선", "윤하(YOUNHA)"));
@@ -59,13 +59,9 @@ public class HomeViewModel extends ViewModel {
         artists.add(new SimpleMusic("+13", "잔나비"));
         artists.add(new SimpleMusic("+13", "잔나비"));
 
-        genreMusics.add(new SimpleMusic("헤어지자말해요", "박재정"));
-        genreMusics.add(new SimpleMusic("비의랩소디", "임재현"));
-        genreMusics.add(new SimpleMusic("가질수없는너", "뱅크"));
-
     }
 
-    public void fetchRankMusic(OnRecentMusicLoaded loadedListener) {
+    public void fetchRankMusic(OnMusicLoaded loadedListener) {
         StringRequest rankMusicRequest = new StringRequest(
                 Request.Method.GET,
                 Domain.url("/api/music/rank"),
@@ -104,7 +100,7 @@ public class HomeViewModel extends ViewModel {
         VolleySingleton.getInstance(getAppContext()).addToRequestQueue(rankMusicRequest);
     }
 
-    public void fetchRecentMusic(OnRecentMusicLoaded loadedListener) {
+    public void fetchRecentMusic(OnMusicLoaded loadedListener) {
         StringRequest rankMusicRequest = new StringRequest(
                 Request.Method.GET,
                 Domain.url("/api/music/recent"),
@@ -122,7 +118,7 @@ public class HomeViewModel extends ViewModel {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(
                                 getAppContext(),
-                                "최신 음악 목록을를 가져오는 중 오류가 발생하였습니다.",
+                                "최신 음악 목록을 가져오는 중 오류가 발생하였습니다.",
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

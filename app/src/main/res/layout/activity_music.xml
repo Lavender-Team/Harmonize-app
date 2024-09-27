@@ -68,6 +68,7 @@
                 android:textColor="@color/gray_4" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="96dp"

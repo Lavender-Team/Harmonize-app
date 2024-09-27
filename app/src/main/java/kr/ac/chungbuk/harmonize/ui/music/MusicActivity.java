@@ -3,12 +3,15 @@ package kr.ac.chungbuk.harmonize.ui.music;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.NetworkResponse;
@@ -23,10 +26,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
+import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.GsonDateSupport;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.ActivityMusicBinding;
 import kr.ac.chungbuk.harmonize.dto.MusicDto;
 import kr.ac.chungbuk.harmonize.utility.adapter.TabFragmentAdapter;
@@ -38,6 +45,8 @@ public class MusicActivity extends AppCompatActivity {
     MetadataFragment metadataFragment;
 
     private int indicatorWidth;
+
+    public MusicDto musicState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +111,13 @@ public class MusicActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) { }
         });
 
+        binding.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleBookmark();
+            }
+        });
+
 
         /* Intent로 부터 액티비티에 표시할 음악의 musicId 받기 */
         Intent intent = getIntent();
@@ -123,8 +139,19 @@ public class MusicActivity extends AppCompatActivity {
                         Gson gson = GsonDateSupport.getInstance();
                         MusicDto music = gson.fromJson(response, MusicDto.class);
 
+                        MusicActivity.this.musicState = music;
+
                         binding.tvTitle.setText(music.getTitle());
                         binding.tvArtist.setText(music.getArtist());
+
+                        // 좋아요 버튼 상태 설정
+                        Drawable leftDrawable;
+                        if (music.getIsBookmarked())
+                            leftDrawable = AppCompatResources.getDrawable(MusicActivity.this, R.drawable.ic_favorite_purple_18dp);
+                        else
+                            leftDrawable = AppCompatResources.getDrawable(MusicActivity.this, R.drawable.ic_favorite_border_purple_18dp);
+                        binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null);
+
 
                         // 노래 정보 Fragment 설정
                         if (metadataFragment != null)
@@ -148,6 +175,13 @@ public class MusicActivity extends AppCompatActivity {
                 }
         ) {
             @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
+            @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String utf8String = new String(response.data, "UTF-8");
@@ -161,5 +195,45 @@ public class MusicActivity extends AppCompatActivity {
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(fetchRequest);
+    }
+
+    void toggleBookmark() {
+
+        // 좋아요 버튼 상태 설정
+        Drawable leftDrawable;
+        if (musicState.getIsBookmarked())
+            leftDrawable = AppCompatResources.getDrawable(MusicActivity.this, R.drawable.ic_favorite_border_purple_18dp);
+        else
+            leftDrawable = AppCompatResources.getDrawable(MusicActivity.this, R.drawable.ic_favorite_purple_18dp);
+
+        binding.btnLike.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null);
+        musicState.setIsBookmarked(!musicState.getIsBookmarked());
+
+
+        StringRequest bookmarkRequest = new StringRequest(
+                (musicState.getIsBookmarked()) ? Request.Method.POST : Request.Method.DELETE,
+                Domain.url("/api/music/" + musicState.getId() + "/like"),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) { }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "좋아요 처리 중 오류가 발생하였습니다.", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(bookmarkRequest);
     }
 }

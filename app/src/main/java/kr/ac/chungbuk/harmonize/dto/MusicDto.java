@@ -22,6 +22,7 @@ public class MusicDto {
     private String playLink;
     private Long view;
     private Long likes;
+    private Boolean isBookmarked;
     private List<String> themes;
     private String audioFile;
     private String lyrics;

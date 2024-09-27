@@ -124,14 +124,14 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        homeViewModel.fetchRankMusic(new HomeViewModel.OnRecentMusicLoaded() {
+        homeViewModel.fetchRankMusic(new HomeViewModel.OnMusicLoaded() {
             @Override
             public void setMusics(List<MusicListDto> musics) {
                 rankMusicAdapter.setMusic(musics);
             }
         });
 
-        homeViewModel.fetchRecentMusic(new HomeViewModel.OnRecentMusicLoaded() {
+        homeViewModel.fetchRecentMusic(new HomeViewModel.OnMusicLoaded() {
             @Override
             public void setMusics(List<MusicListDto> musics) {
                 recentMusicAdapter.setMusics(musics);

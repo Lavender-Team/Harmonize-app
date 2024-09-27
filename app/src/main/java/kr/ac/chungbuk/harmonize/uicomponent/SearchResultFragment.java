@@ -33,7 +33,7 @@ public class SearchResultFragment extends Fragment {
     TextView errorText;
     LinearLayoutManager linearLayoutManager;
     MusicListAdapter adapter;
-    ArrayList<SimpleMusic> items = new ArrayList<>();
+    ArrayList<MusicListDto> items = new ArrayList<>();
 
 
     @Nullable
@@ -52,9 +52,9 @@ public class SearchResultFragment extends Fragment {
                 getActivity(),
                 new MusicListAdapter.OnListItemSelectedInterface() {
                     @Override
-                    public void onItemSelected(View v, int position) {
+                    public void onItemSelected(View v, long musicId) {
                         Intent intent = new Intent(getActivity(), MusicActivity.class);
-                        intent.putExtra("musicId", items.get(position).getMusicId());
+                        intent.putExtra("musicId", musicId);
                         startActivity(intent);
                     }
                 });
@@ -75,7 +75,7 @@ public class SearchResultFragment extends Fragment {
     public void searchCompleted(SearchResultDto searchResult) {
         items.clear();
         for (MusicListDto m : searchResult.getContent()) {
-            items.add(new SimpleMusic(m.getId(), m.getTitle(), m.getArtist(), m.getAlbumCover()));
+            items.add(m);
         }
 
         adapter.notifyDataSetChanged();

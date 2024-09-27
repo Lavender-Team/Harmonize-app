@@ -17,32 +17,34 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
+import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Holder> {
 
     public interface OnListItemSelectedInterface {
-        void onItemSelected(View v, int position);
+        void onItemSelected(View v, long musicId);
     }
 
     private OnListItemSelectedInterface mListener;
 
-    ArrayList<SimpleMusic> items = new ArrayList<>();
+    List<MusicListDto> items = new ArrayList<>();
     FragmentActivity activity;
 
-    public MusicListAdapter(ArrayList<SimpleMusic> items) {
+    public MusicListAdapter(ArrayList<MusicListDto> items) {
         this.items = items;
     }
 
-    public MusicListAdapter(ArrayList<SimpleMusic> items, FragmentActivity activity) {
+    public MusicListAdapter(ArrayList<MusicListDto> items, FragmentActivity activity) {
         this.items = items;
         this.activity = activity;
     }
 
-    public MusicListAdapter(ArrayList<SimpleMusic> items, FragmentActivity activity,
+    public MusicListAdapter(List<MusicListDto> items, FragmentActivity activity,
                             OnListItemSelectedInterface mListener) {
         this.items = items;
         this.activity = activity;
@@ -59,7 +61,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        SimpleMusic item = items.get(position);
+        MusicListDto item = items.get(position);
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtist());
         if (activity != null) {
@@ -74,6 +76,17 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void addItems(List<MusicListDto> newItems) {
+        int startPosition = items.size();
+        items.addAll(newItems);
+        notifyItemRangeChanged(startPosition, newItems.size());
+    }
+
+    public void clearItems() {
+        items.clear();
+        notifyDataSetChanged();
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -92,7 +105,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Hold
             musicListItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemSelected(v, getAdapterPosition());
+                    mListener.onItemSelected(v, items.get(getAdapterPosition()).getId());
                 }
             });
 
