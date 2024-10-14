@@ -47,43 +47,12 @@ public class MetadataFragment extends Fragment {
         return fragment;
     }
 
-    RecyclerView relatedMusicListView;
-    LinearLayoutManager relatedMusicLayoutManager;
-    RecentMusicListAdapter relatedMusicAdapter;
-
-    private ObservableArrayList<MusicListDto> relatedMusics = new ObservableArrayList<>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentMetadataBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        relatedMusicListView = root.findViewById(R.id.relatedMusicListView);
-
-        /* 이 노래와 비슷한 곡들 */
-        relatedMusicLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        relatedMusicAdapter = new RecentMusicListAdapter(relatedMusics,
-                new RecentMusicListAdapter.OnItemSelectedInterface() {
-                @Override
-                public void onItemSelected(View v, long musicId) {
-                    Intent intent = new Intent(getActivity(), MusicActivity.class);
-                    intent.putExtra("musicId", musicId);
-                    startActivity(intent);
-                }
-            });
-        relatedMusicListView.setLayoutManager(relatedMusicLayoutManager);
-        relatedMusicListView.setAdapter(relatedMusicAdapter);
-
-
-        relatedMusics.clear();
-        /*relatedMusics.add(new SimpleMusic("사랑할 수 밖에", "볼빨간 사춘기"));
-        relatedMusics.add(new SimpleMusic("화이트(White)", "폴킴"));
-        relatedMusics.add(new SimpleMusic("주저하는 연인들을 위해", "잔나비"));
-        relatedMusics.add(new SimpleMusic("사랑할 수 밖에", "볼빨간 사춘기"));
-        relatedMusics.add(new SimpleMusic("화이트(White)", "폴킴"));*/
-        relatedMusicAdapter.notifyDataSetChanged();
 
         return root;
     }
@@ -168,6 +137,11 @@ public class MetadataFragment extends Fragment {
                 TextView tvTheme = (TextView) binding.fbTheme.getChildAt(binding.fbTheme.getChildCount() - 1);
                 tvTheme.setText(theme);
             }
+        }
+
+        // 가사
+        if (music.getLyrics() != null && !music.getLyrics().isBlank()) {
+            binding.tvLyrics.setText(music.getLyrics());
         }
     }
 }

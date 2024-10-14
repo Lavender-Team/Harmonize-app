@@ -43,6 +43,8 @@ public class MusicActivity extends AppCompatActivity {
     private ActivityMusicBinding binding;
 
     MetadataFragment metadataFragment;
+    PitchdataFragment pitchdataFragment;
+    SingFragment singFragment;
 
     private int indicatorWidth;
 
@@ -70,9 +72,14 @@ public class MusicActivity extends AppCompatActivity {
         metadataFragment = MetadataFragment.newInstance();
         tabAdapter.addFragment(metadataFragment, "노래 정보");
 
+        // 음역대 Fragment
+        pitchdataFragment = PitchdataFragment.newInstance();
+        tabAdapter.addFragment(pitchdataFragment, "음역대");
 
-        tabAdapter.addFragment(PitchdataFragment.newInstance("param1", "param2"), "음역대");
-        tabAdapter.addFragment(SingFragment.newInstance("param1", "param2"), "따라 부르기");
+        // 따라 부르기 Fragment
+        singFragment = SingFragment.newInstance();
+        tabAdapter.addFragment(singFragment, "따라 부르기");
+
         binding.detailViewPager.setAdapter(tabAdapter);
         binding.detailViewPager.setOffscreenPageLimit(3);
         binding.typeTabLayout.setupWithViewPager(binding.detailViewPager);
@@ -156,6 +163,14 @@ public class MusicActivity extends AppCompatActivity {
                         // 노래 정보 Fragment 설정
                         if (metadataFragment != null)
                             metadataFragment.setData(music);
+
+                        // 음역대 Fragment 설정
+                        if (pitchdataFragment != null)
+                            pitchdataFragment.setData(music);
+
+                        // 따라부르기 Fragment 설정
+                        if (singFragment != null)
+                            singFragment.setData(music);
 
                         // 앨범 커버 로드
                         Glide.with(getApplicationContext())

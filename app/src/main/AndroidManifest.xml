@@ -56,4 +56,18 @@
         </activity>
     </application>
 
+    <queries>
+        <!-- 브라우저 앱을 열 수 있도록 설정 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+
+        <package android:name="com.google.android.youtube" />
+    </queries>
+
 </manifest>

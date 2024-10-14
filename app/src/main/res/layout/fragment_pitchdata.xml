@@ -44,9 +44,9 @@
                         android:textSize="12dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
+                        android:id="@+id/tvHighestPitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="A4"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
@@ -64,14 +64,15 @@
                         android:textSize="12dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
+                        android:id="@+id/tvLowestPitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="D2"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -109,10 +110,11 @@
                         android:textSize="14dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
+                        android:id="@+id/tvHighPitchRatio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="22%"
+                        android:text=""
                         android:textSize="14dp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -128,99 +130,19 @@
                         android:textSize="14dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
+                        android:id="@+id/tvLowPitchRatio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="0%"
+                        android:text=""
                         android:textSize="14dp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="72dp"
-                        android:layout_height="wrap_content"
-                        android:text="고음 지속"
-                        android:textSize="14dp"
-                        android:textColor="@color/gray_4"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="10초"
-                        android:textSize="14dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="72dp"
-                        android:layout_height="wrap_content"
-                        android:text="저음 지속"
-                        android:textSize="14dp"
-                        android:textColor="@color/gray_4"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="없음"
-                        android:textSize="14dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="96dp"
-                    android:layout_height="wrap_content"
-                    android:text="급격한 음 변화"
-                    android:textSize="14dp"
-                    android:textColor="@color/gray_4"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="3회"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="96dp"
-                    android:layout_height="wrap_content"
-                    android:text="음악 템포"
-                    android:textSize="14dp"
-                    android:textColor="@color/gray_4"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="104bpm"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -264,7 +186,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -284,14 +206,14 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
 
-                <!--<kr.ac.chungbuk.harmonize.uicomponent.PitchGraphView
+                <kr.ac.chungbuk.harmonize.uicomponent.PitchGraphView
                     android:id="@+id/pitchGraphView"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="12dp"
-                    />-->
+                    />
 
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 </ScrollView>

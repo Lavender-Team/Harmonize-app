@@ -43,7 +43,7 @@ public class MyMarkerView extends MarkerView {
             tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
         } else {
             if (0 <= e.getY() && e.getY() <= 1)
-                tvContent.setText(PitchConverter.doubleToPitch(e.getY()));
+                tvContent.setText(PitchConverter.freqToPitch(e.getY()));
             else
                 tvContent.setText("");
         }

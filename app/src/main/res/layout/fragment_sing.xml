@@ -24,66 +24,23 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="따라 부르기"
+                    android:text="미리 들어보기"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:paddingVertical="14dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@drawable/gray_border">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:text="일부러 몇 발자국 물러나"
-                        android:textSize="16dp"
-                        android:textColor="@color/gray_3"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:text="내가 없이 혼자 걷는 널 바라본다"
-                        android:textSize="16dp"
-                        android:textColor="@color/gray_3"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:text="옆자리 허전한 너의 풍경"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:text="흑백 거리 가운데 넌 뒤돌아본다"
-                        android:textSize="16dp"
-                        android:textColor="@color/gray_3"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="4dp"
-                        android:text="그때 알게 되었어"
-                        android:textSize="16dp"
-                        android:textColor="@color/gray_3"/>
-                </LinearLayout>
-
-                <LinearLayout
+                    android:id="@+id/llListenOnYoutube"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:id="@+id/btnListenOnYoutube"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:paddingHorizontal="16dp"
                         android:layout_marginRight="6dp"
                         android:orientation="horizontal"
                         android:gravity="center"
@@ -100,32 +57,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="12dp"
                             android:paddingVertical="12dp"
-                            android:text="시작하기"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="6dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:background="@drawable/white_ripple_button"
-                        android:clickable="true">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginTop="0.5dp"
-                            android:layout_marginRight="8dp"
-                            android:src="@drawable/ic_stop_black_18dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="12dp"
-                            android:paddingVertical="12dp"
-                            android:text="끝내기"
+                            android:text="Youtube에서 듣기"
                             android:textSize="14dp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -136,44 +68,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="48dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginBottom="24dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="12dp">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_ai_music"
+                    android:layout_gravity="center_vertical"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="평가 결과"
+                    android:layout_marginLeft="2dp"
+                    android:text="이 노래와 비슷한 곡들"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="84dp"
-                        android:layout_height="wrap_content"
-                        android:text="음정 일치도"
-                        android:textSize="14dp"
-                        android:textColor="@color/gray_4"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="89점"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/relatedMusicListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="18dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                tools:itemCount="1"
+                tools:listitem="@layout/recent_music_item"
+                />
+
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

@@ -8,59 +8,50 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.databinding.FragmentPitchdataBinding;
+import kr.ac.chungbuk.harmonize.dto.MusicDto;
+import kr.ac.chungbuk.harmonize.utility.PitchConverter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PitchdataFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class PitchdataFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    FragmentPitchdataBinding binding;
 
     public PitchdataFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PitchdataFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PitchdataFragment newInstance(String param1, String param2) {
+    public static PitchdataFragment newInstance() {
         PitchdataFragment fragment = new PitchdataFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pitchdata, container, false);
+        binding = FragmentPitchdataBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        return root;
+    }
+
+    public void setData(MusicDto music) {
+        if (music == null || binding == null)
+            return;
+
+        if (music.getHighestPitch() != null)
+            binding.tvHighestPitch.setText(PitchConverter.freqToPitch(music.getHighestPitch()));
+
+        if (music.getLowestPitch() != null)
+            binding.tvLowestPitch.setText(PitchConverter.freqToPitch(music.getLowestPitch()));
+
+        if (music.getHighPitchRatio() != null)
+            binding.tvHighPitchRatio.setText((double) Math.round(music.getHighPitchRatio() * 1000) / 10 + "%");
+
+        if (music.getLowPitchRatio() != null)
+            binding.tvLowPitchRatio.setText((double) Math.round(music.getLowPitchRatio() * 1000) / 10 + "%");
     }
 
 }

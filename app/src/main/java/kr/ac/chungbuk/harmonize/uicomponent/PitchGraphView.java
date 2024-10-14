@@ -90,7 +90,7 @@ public class PitchGraphView extends LinearLayout implements SeekBar.OnSeekBarCha
         y.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return PitchConverter.doubleToPitch(value);
+                return PitchConverter.freqToPitch(value);
             }
 
             @Override

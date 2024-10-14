@@ -1,12 +1,15 @@
 package kr.ac.chungbuk.harmonize.utility;
 
+import android.util.Log;
+
 import java.util.Arrays;
 
 public class PitchConverter {
 
-    private static final double[] pitchLevel = new double[] {
-        0.0, 0.11, 0.14, 0.17, 0.19, 0.22, 0.25, 0.28, 0.30, 0.33, 0.36, 0.38, 0.41, 0.44, 0.47, 0.49,
-        0.52, 0.55, 0.57, 0.60, 0.63, 0.66, 0.68, 0.71, 0.74, 0.76, 0.79, 0.82, 0.85, 0.87, 0.90, 1.0
+    private static final double[] freqLevel = new double[] {
+            65.41, 65.41, 73.42, 82.41, 87.31, 98.00, 110.00, 123.47, 130.81, 146.83, 164.81, 174.61, 196.00, 220.00, 246.94,
+            261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77,
+            1046.50, 1174.66, 1174.66
     };
 
     private static final String[] pitchString = new String[] {
@@ -19,7 +22,7 @@ public class PitchConverter {
      * @param value MusicDetail에서 받은 음높이 max, min 값
      * @return C3 D3 등 음계 문자열
      */
-    public static String doubleToPitch(double value)
+    public static String freqToPitch(double value)
     {
         int nearestIndex = searchNearest(value);
 
@@ -30,11 +33,11 @@ public class PitchConverter {
     }
 
     private static int searchNearest(double value) {
-        int result = Arrays.binarySearch(pitchLevel, value);
+        int result = Arrays.binarySearch(freqLevel, value);
         if (result >= 0) { return result; }
 
         int insertionPoint = -result - 1;
-        return (pitchLevel[insertionPoint] - value) < (value - pitchLevel[insertionPoint - 1]) ?
+        return (freqLevel[insertionPoint] - value) < (value - freqLevel[insertionPoint - 1]) ?
                 insertionPoint : insertionPoint - 1;
     }
 
