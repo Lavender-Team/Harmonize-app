@@ -18,16 +18,17 @@ import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.databinding.FragmentSingBinding;
 import kr.ac.chungbuk.harmonize.dto.MusicDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
+import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.RecentMusicListAdapter;
 
 public class SingFragment extends Fragment {
 
     FragmentSingBinding binding;
 
-    LinearLayoutManager relatedMusicLayoutManager;
-    RecentMusicListAdapter relatedMusicAdapter;
+    LinearLayoutManager similarMusicLayoutManager;
+    MusicListAdapter similarMusicAdapter;
 
-    private ObservableArrayList<MusicListDto> relatedMusics = new ObservableArrayList<>();
+    private ObservableArrayList<MusicListDto> similarMusics = new ObservableArrayList<>();
 
     public SingFragment() {
         // Required empty public constructor
@@ -52,9 +53,10 @@ public class SingFragment extends Fragment {
         View root = binding.getRoot();
 
         /* 이 노래와 비슷한 곡들 */
-        relatedMusicLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        relatedMusicAdapter = new RecentMusicListAdapter(relatedMusics,
-                new RecentMusicListAdapter.OnItemSelectedInterface() {
+        similarMusicLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        similarMusicAdapter = new MusicListAdapter(similarMusics,
+                getActivity(),
+                new MusicListAdapter.OnListItemSelectedInterface() {
                     @Override
                     public void onItemSelected(View v, long musicId) {
                         Intent intent = new Intent(getActivity(), MusicActivity.class);
@@ -62,14 +64,8 @@ public class SingFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-        binding.relatedMusicListView.setLayoutManager(relatedMusicLayoutManager);
-        binding.relatedMusicListView.setAdapter(relatedMusicAdapter);
-
-
-        relatedMusics.clear();
-        /*relatedMusics.add(new SimpleMusic("사랑할 수 밖에", "볼빨간 사춘기"));
-        relatedMusics.add(new SimpleMusic("화이트(White)", "폴킴"));*/
-        relatedMusicAdapter.notifyDataSetChanged();
+        binding.similarMusicListView.setLayoutManager(similarMusicLayoutManager);
+        binding.similarMusicListView.setAdapter(similarMusicAdapter);
 
         return root;
     }
@@ -83,6 +79,13 @@ public class SingFragment extends Fragment {
             });
         } else {
             binding.llListenOnYoutube.setVisibility(View.GONE);
+        }
+
+        if (music.getSimilarMusics() == null || music.getSimilarMusics().isEmpty()) {
+            binding.llSimilarMusic.setVisibility(View.GONE);
+        } else {
+            similarMusics.addAll(music.getSimilarMusics());
+            similarMusicAdapter.notifyDataSetChanged();
         }
 
     }

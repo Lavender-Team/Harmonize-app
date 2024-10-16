@@ -66,6 +66,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llSimilarMusic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -93,14 +94,14 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/relatedMusicListView"
+                android:id="@+id/similarMusicListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="18dp"
+                android:layout_height="432dp"
+                android:layout_marginTop="8dp"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
-                tools:itemCount="1"
-                tools:listitem="@layout/recent_music_item"
+                tools:itemCount="6"
+                tools:listitem="@layout/music_list_item"
                 />
 
         </LinearLayout>

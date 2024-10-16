@@ -37,4 +37,5 @@ public class MusicDto {
     private Integer steepSlope;
     private Integer level;
 
+    private List<MusicListDto> similarMusics;
 }
