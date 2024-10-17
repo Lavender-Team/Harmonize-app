@@ -13,6 +13,7 @@
     app:cardCornerRadius="0dp">
 
     <LinearLayout
+        android:id="@+id/musicListItem"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

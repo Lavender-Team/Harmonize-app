@@ -41,6 +41,10 @@ public class AuthDto {
     private static final Map<String, String> names = new HashMap<>();
     private static final Map<String, String> values = new HashMap<>();
 
+    public static String getGenreValue(String g) {
+        return names.get(g);
+    }
+
     static {
         names.put("KPOP", "가요");
         names.put("POP", "팝송");

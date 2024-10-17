@@ -22,39 +22,39 @@ import java.util.List;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
-import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 
-public class MusicListShadowAdapter extends RecyclerView.Adapter<MusicListShadowAdapter.Holder> {
+public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeedbackAdapter.Holder> {
 
     public interface OnListItemSelectedInterface {
         void onItemSelected(View v, long musicId);
     }
 
-    private MusicListAdapter.OnListItemSelectedInterface mListener;
+    private OnListItemSelectedInterface mListener;
 
     List<MusicListDto> items = new ArrayList<>();
     FragmentActivity activity;
 
-    public MusicListShadowAdapter(ArrayList<MusicListDto> items) {
+    public MusicListFeedbackAdapter(ArrayList<MusicListDto> items) {
         this.items = items;
     }
 
-    public MusicListShadowAdapter(ArrayList<MusicListDto> items, FragmentActivity activity) {
+    public MusicListFeedbackAdapter(ArrayList<MusicListDto> items, FragmentActivity activity) {
         this.items = items;
         this.activity = activity;
     }
 
-    public MusicListShadowAdapter(ArrayList<MusicListDto> items, FragmentActivity activity,
-                                  MusicListAdapter.OnListItemSelectedInterface mListener) {
+    public MusicListFeedbackAdapter(List<MusicListDto> items, FragmentActivity activity,
+                                    OnListItemSelectedInterface mListener) {
         this.items = items;
         this.activity = activity;
         this.mListener = mListener;
     }
 
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.music_list_item_shadow, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.music_list_item_feedback, parent, false);
         return new Holder(v);
     }
 
@@ -69,6 +69,13 @@ public class MusicListShadowAdapter extends RecyclerView.Adapter<MusicListShadow
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(new ColorDrawable(Color.parseColor("#F6F6F6")))
                     .into(holder.ivThumbnail);
+        }
+
+        if (position % 3 == 1) {
+            holder.llFeedback.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.llFeedback.setVisibility(View.GONE);
         }
     }
 
@@ -93,6 +100,8 @@ public class MusicListShadowAdapter extends RecyclerView.Adapter<MusicListShadow
         private final TextView tvArtist;
         private final ImageView ivThumbnail;
         private final LinearLayout musicListItem;
+        private final LinearLayout llFeedback;
+        private final LinearLayout btnLike, btnDislike;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +109,10 @@ public class MusicListShadowAdapter extends RecyclerView.Adapter<MusicListShadow
             tvArtist = itemView.findViewById(R.id.tvArtist);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             musicListItem = itemView.findViewById(R.id.musicListItem);
+            llFeedback = itemView.findViewById(R.id.llFeedback);
+            btnLike = itemView.findViewById(R.id.btnLike);
+            btnDislike = itemView.findViewById(R.id.btnDislike);
+
 
             musicListItem.setOnClickListener(new View.OnClickListener() {
                 @Override

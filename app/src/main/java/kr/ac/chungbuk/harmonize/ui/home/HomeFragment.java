@@ -3,12 +3,15 @@ package kr.ac.chungbuk.harmonize.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatToggleButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,11 +28,15 @@ import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.FragmentHomeBinding;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
@@ -66,7 +73,16 @@ public class HomeFragment extends Fragment {
 
         /* 최상단 추천곡 목록 */
         homeRecommendLinearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        homeRecommendAdapter = new MusicListShadowAdapter(homeViewModel.getHomeRecommendMusics());
+        homeRecommendAdapter = new MusicListShadowAdapter(homeViewModel.getHomeRecommendMusics(),
+                getActivity(),
+                new MusicListAdapter.OnListItemSelectedInterface() {
+                    @Override
+                    public void onItemSelected(View v, long musicId) {
+                        Intent intent = new Intent(getActivity(), MusicActivity.class);
+                        intent.putExtra("musicId", musicId);
+                        startActivity(intent);
+                    }
+                });
         binding.homeRecommendListView.setLayoutManager(homeRecommendLinearLayoutManager);
         binding.homeRecommendListView.setAdapter(homeRecommendAdapter);
 
@@ -79,7 +95,16 @@ public class HomeFragment extends Fragment {
 
         /* 장르별 맞춤 추천곡 */
         genreMusicLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        genreMusicAdapter = new MusicListAdapter(homeViewModel.getGenreMusics());
+        genreMusicAdapter = new MusicListAdapter(homeViewModel.getGenreMusics(),
+                getActivity(),
+                new MusicListAdapter.OnListItemSelectedInterface() {
+                    @Override
+                    public void onItemSelected(View v, long musicId) {
+                        Intent intent = new Intent(getActivity(), MusicActivity.class);
+                        intent.putExtra("musicId", musicId);
+                        startActivity(intent);
+                    }
+                });
         binding.genreMusicListView.setLayoutManager(genreMusicLayoutManager);
         binding.genreMusicListView.setAdapter(genreMusicAdapter);
 
@@ -111,6 +136,58 @@ public class HomeFragment extends Fragment {
         binding.latestMusicListView.setLayoutManager(recentMusicLayoutManager);
         binding.latestMusicListView.setAdapter(recentMusicAdapter);
 
+        
+        /* 선호 장르 선택 버튼 동적으로 추가 */
+        LayoutInflater layoutInflater = getLayoutInflater();
+        List<String> genres = new ArrayList<>();
+        try {
+            AuthDto authDto = AuthDao.find();
+            genres = authDto.getGenre();
+        } catch (Exception e) {
+            // 로그인되지 않은 경우
+            genres = new ArrayList<>(Arrays.asList("KPOP", "BALLADE", "DANCE"));
+        } finally {
+            for (int i = 0; i < genres.size(); i++) {
+                layoutInflater.inflate(R.layout.button_genre, binding.llGenreButtons);
+                AppCompatToggleButton btnGenre = (AppCompatToggleButton) binding.llGenreButtons.getChildAt(
+                        binding.llGenreButtons.getChildCount() - 1
+                );
+                btnGenre.setText(AuthDto.getGenreValue(genres.get(i)));
+                btnGenre.setTextOn(AuthDto.getGenreValue(genres.get(i)));
+                btnGenre.setTextOff(AuthDto.getGenreValue(genres.get(i)));
+                btnGenre.setTag(genres.get(i));
+
+                if (i == 0) {
+                    btnGenre.setChecked(true);
+                    homeViewModel.setSelectedGenre(genres.get(i));
+                }
+
+                btnGenre.setOnClickListener((v) -> {
+                    if (homeViewModel.getSelectedGenre() == (String) v.getTag())
+                        return;
+
+                    for (int c = 0; c < binding.llGenreButtons.getChildCount(); c++) {
+                        AppCompatToggleButton btn = (AppCompatToggleButton) binding.llGenreButtons.getChildAt(c);
+
+                        if (btn.getTag() == v.getTag()) {
+                            homeViewModel.setSelectedGenre((String) v.getTag());
+                            homeViewModel.fetchGenreMusic(new HomeViewModel.OnMusicLoaded() {
+                                @Override
+                                public void setMusics(List<MusicListDto> musics) {
+                                    genreMusicAdapter.clearItems();
+                                    genreMusicAdapter.addItems(musics);
+                                }
+                            });
+
+                        }
+                        else {
+                            btn.setChecked(false);
+                        }
+                    }
+                });
+            }
+        }
+
         return root;
     }
 
@@ -123,6 +200,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        homeViewModel.fetchRecommendMusic(new HomeViewModel.OnMusicLoaded() {
+            @Override
+            public void setMusics(List<MusicListDto> musics) {
+                homeRecommendAdapter.clearItems();
+                homeRecommendAdapter.addItems(musics);
+            }
+        });
+
+        homeViewModel.fetchGenreMusic(new HomeViewModel.OnMusicLoaded() {
+            @Override
+            public void setMusics(List<MusicListDto> musics) {
+                genreMusicAdapter.clearItems();
+                genreMusicAdapter.addItems(musics);
+            }
+        });
 
         homeViewModel.fetchRankMusic(new HomeViewModel.OnMusicLoaded() {
             @Override

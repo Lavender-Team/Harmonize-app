@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.analysis.AnalysisFragment">
 
@@ -190,7 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="가요, 팝송, 랩/힙합"
+                android:text="발라드, 댄스, 인디뮤직"
                 android:textSize="14dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
@@ -222,5 +223,31 @@
         </LinearLayout>
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/musicListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/music_list_item_feedback" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnRecommend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_margin="24dp"
+            android:contentDescription="재추천"
+            app:tint="@null"
+            android:src="@drawable/ic_ai_music_white"
+            app:backgroundTint="@color/purple_500"
+            app:rippleColor="@color/colorAccent"
+            app:fabCustomSize="66dp"
+            app:maxImageSize="28dp"
+            />
+
+    </FrameLayout>
 
 </LinearLayout>

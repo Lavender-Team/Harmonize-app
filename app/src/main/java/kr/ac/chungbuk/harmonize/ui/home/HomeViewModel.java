@@ -2,6 +2,7 @@ package kr.ac.chungbuk.harmonize.ui.home;
 
 import static kr.ac.chungbuk.harmonize.config.AppContext.getAppContext;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableArrayList;
@@ -28,6 +29,7 @@ import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
 import lombok.Getter;
+import lombok.Setter;
 
 public class HomeViewModel extends ViewModel {
 
@@ -36,18 +38,16 @@ public class HomeViewModel extends ViewModel {
     }
 
     @Getter
-    private ObservableArrayList<SimpleMusic> homeRecommendMusics = new ObservableArrayList<>();
+    private ObservableArrayList<MusicListDto> homeRecommendMusics = new ObservableArrayList<>();
     @Getter
     private ObservableArrayList<SimpleMusic> artists = new ObservableArrayList<>();
     @Getter
     private ObservableArrayList<MusicListDto> genreMusics = new ObservableArrayList<>();
 
+    @Getter @Setter
+    private String selectedGenre = "KPOP";
+
     public HomeViewModel() {
-        homeRecommendMusics.add(new SimpleMusic("사건의 지평선", "윤하(YOUNHA)"));
-        homeRecommendMusics.add(new SimpleMusic("좋니", "윤종신"));
-        homeRecommendMusics.add(new SimpleMusic("기억의 습작", "김동률"));
-        homeRecommendMusics.add(new SimpleMusic("좋니", "윤종신"));
-
         artists.add(new SimpleMusic("+13", "잔나비"));
         artists.add(new SimpleMusic("+13", "잔나비"));
         artists.add(new SimpleMusic("+13", "잔나비"));
@@ -59,6 +59,84 @@ public class HomeViewModel extends ViewModel {
         artists.add(new SimpleMusic("+13", "잔나비"));
         artists.add(new SimpleMusic("+13", "잔나비"));
 
+    }
+
+    public void fetchRecommendMusic(OnMusicLoaded loadedListener) {
+        StringRequest genreMusicRequest = new StringRequest(
+                Request.Method.GET,
+                Domain.url("/api/music?size=4"),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        CommonMusicResultDto recommendMusicResult = gson.fromJson(response, CommonMusicResultDto.class);
+
+                        loadedListener.setMusics(recommendMusicResult.getContent());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                getAppContext(),
+                                "내 목소리 맞춤 추천곡을 가져오는 중 오류가 발생하였습니다.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+        VolleySingleton.getInstance(getAppContext()).addToRequestQueue(genreMusicRequest);
+    }
+
+    public void fetchGenreMusic(OnMusicLoaded loadedListener) {
+        StringRequest genreMusicRequest = new StringRequest(
+                Request.Method.GET,
+                Domain.url("/api/music?size=3&page=1&genre="+selectedGenre),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        CommonMusicResultDto genreMusicResult = gson.fromJson(response, CommonMusicResultDto.class);
+
+                        loadedListener.setMusics(genreMusicResult.getContent());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                getAppContext(),
+                                "장르별 맞춤 추천곡을 가져오는 중 오류가 발생하였습니다.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+        VolleySingleton.getInstance(getAppContext()).addToRequestQueue(genreMusicRequest);
     }
 
     public void fetchRankMusic(OnMusicLoaded loadedListener) {
