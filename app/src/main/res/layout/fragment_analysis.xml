@@ -129,6 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -148,10 +149,10 @@
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="남성"
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -167,10 +168,10 @@
                     android:textSize="14dp"
                     android:textColor="@color/gray_4"/>
                 <TextView
+                    android:id="@+id/tvAge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="30대"
                     android:textSize="14dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -188,16 +189,17 @@
                 android:textSize="14dp"
                 android:textColor="@color/gray_4"/>
             <TextView
+                android:id="@+id/tvGenre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="발라드, 댄스, 인디뮤직"
                 android:textSize="14dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

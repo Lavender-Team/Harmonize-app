@@ -2,26 +2,39 @@ package kr.ac.chungbuk.harmonize.utility.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
+import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
+import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
 
 public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeedbackAdapter.Holder> {
 
@@ -102,6 +115,7 @@ public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeed
         private final LinearLayout musicListItem;
         private final LinearLayout llFeedback;
         private final LinearLayout btnLike, btnDislike;
+        private final ImageButton btnFeedbackMenu;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -109,10 +123,24 @@ public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeed
             tvArtist = itemView.findViewById(R.id.tvArtist);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             musicListItem = itemView.findViewById(R.id.musicListItem);
+            btnFeedbackMenu = itemView.findViewById(R.id.btnFeedbackMenu);
             llFeedback = itemView.findViewById(R.id.llFeedback);
             btnLike = itemView.findViewById(R.id.btnLike);
             btnDislike = itemView.findViewById(R.id.btnDislike);
 
+            btnFeedbackMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (llFeedback.getVisibility() == View.VISIBLE) {
+                        llFeedback.animate().alpha(0.0f).translationY(-20);
+                        llFeedback.setVisibility(View.GONE);
+                    }
+                    else {
+                        llFeedback.animate().alpha(1.0f).translationY(0);
+                        llFeedback.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
 
             musicListItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -121,6 +149,59 @@ public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeed
                 }
             });
 
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postFeedback(items.get(getAdapterPosition()).getId(), true);
+                    llFeedback.setVisibility(View.GONE);
+                    btnFeedbackMenu.setImageResource(R.drawable.ic_like_black_12dp);
+                    btnFeedbackMenu.setOnClickListener(null);
+                }
+            });
+
+            btnDislike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postFeedback(items.get(getAdapterPosition()).getId(), false);
+                    llFeedback.setVisibility(View.GONE);
+                    btnFeedbackMenu.setImageResource(R.drawable.ic_dislike_black_12dp);
+                    btnFeedbackMenu.setOnClickListener(null);
+                }
+            });
+
         }
     }
+
+    void postFeedback(long musicId, boolean isPositive) {
+
+        if (activity == null)
+            return;
+
+        StringRequest feedbackRequest = new StringRequest(
+                Request.Method.POST,
+                Domain.url("/api/music/" + musicId + "/feedback?isPositive=" + isPositive),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) { }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast toast = Toast.makeText(activity,
+                                "피드백 처리 중 오류가 발생하였습니다.", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(activity).addToRequestQueue(feedbackRequest);
+    }
+
 }

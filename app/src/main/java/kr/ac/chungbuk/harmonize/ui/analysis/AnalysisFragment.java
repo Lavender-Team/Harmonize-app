@@ -31,11 +31,14 @@ import java.util.List;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.FragmentAnalysisBinding;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.home.HomeViewModel;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
+import kr.ac.chungbuk.harmonize.ui.profile.GenderAgeActivity;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListFeedbackAdapter;
 
@@ -68,6 +71,14 @@ public class AnalysisFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        // 맞춤 추천 정보 편집
+        binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GenderAgeActivity.class));
+            }
+        });
+
         // 내 목소리 분석 열기/닫기
         binding.analysisDataToggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +98,11 @@ public class AnalysisFragment extends Fragment {
             }
         });
 
+        binding.analysisData.animate().alpha(0.0f).translationY(-20);
+        binding.analysisData.setVisibility(View.GONE);
+        binding.analysisDataToggleIcon.setImageResource(R.drawable.ic_arrow_drop_down);
+        binding.analysisDataToggleText.setTextColor(getResources().getColor(R.color.gray_4, getContext().getTheme()));
+
         // 맞춤 추천 정보 열기/닫기
         binding.userDataToggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +121,12 @@ public class AnalysisFragment extends Fragment {
                 }
             }
         });
+
+        binding.userData.animate().alpha(0.0f).translationY(-20);
+        binding.userData.setVisibility(View.GONE);
+        binding.userDataToggleIcon.setImageResource(R.drawable.ic_arrow_drop_down);
+        binding.userDataToggleText.setTextColor(getResources().getColor(R.color.gray_4, getContext().getTheme()));
+
 
         // 목소리 재분석 버튼
         binding.btnVoiceRecording.setOnClickListener(new View.OnClickListener() {
@@ -140,8 +162,26 @@ public class AnalysisFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        try {
+            AuthDto authDto = AuthDao.find();
+            binding.tvGender.setText(authDto.getGender());
+            binding.tvAge.setText(authDto.getAge().toString() + "대");
 
+            StringBuilder genreString = new StringBuilder();
+            for (int i = 0; i < authDto.getGenreValue().size(); i++) {
+                genreString.append(authDto.getGenreValue().get(i));
+                if (i != authDto.getGenreValue().size() - 1)
+                    genreString.append(", ");
+            }
+            binding.tvGenre.setText(genreString.toString());
+        } catch (Exception e) {
+            // 로그인되지 않음
+        }
+    }
 
     public void fetchRecommendMusic(HomeViewModel.OnMusicLoaded loadedListener) {
         StringRequest genreMusicRequest = new StringRequest(

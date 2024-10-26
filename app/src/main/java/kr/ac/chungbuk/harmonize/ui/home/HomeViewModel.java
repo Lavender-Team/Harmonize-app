@@ -103,7 +103,7 @@ public class HomeViewModel extends ViewModel {
     public void fetchGenreMusic(OnMusicLoaded loadedListener) {
         StringRequest genreMusicRequest = new StringRequest(
                 Request.Method.GET,
-                Domain.url("/api/music?size=3&page=1&genre="+selectedGenre),
+                Domain.url("/api/music?size=3&page=0&genre="+selectedGenre),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
