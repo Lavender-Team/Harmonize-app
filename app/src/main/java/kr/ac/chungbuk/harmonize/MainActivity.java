@@ -1,5 +1,8 @@
 package kr.ac.chungbuk.harmonize;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
@@ -14,7 +17,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.List;
+
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.ActivityMainBinding;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
+import kr.ac.chungbuk.harmonize.ui.analysis.VoiceRecordingActivity;
+import kr.ac.chungbuk.harmonize.ui.profile.FeedbackActivity;
+import kr.ac.chungbuk.harmonize.ui.profile.GenderAgeActivity;
+import kr.ac.chungbuk.harmonize.ui.profile.LoginActivity;
+import kr.ac.chungbuk.harmonize.ui.test.TestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +50,49 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AuthDto authDto;
+
+        // 로그인되지 않은 상태이면 로그인 액티비티 표시
+        try {
+            authDto = AuthDao.find();
+        } catch (Exception e) {
+            openActivityIfNotInStack(this, LoginActivity.class);
+            return;
+        }
+
+        if (authDto.getAge() == 0 || authDto.getGender().isBlank() || authDto.getGenre().isEmpty()) {
+            openActivityIfNotInStack(this, GenderAgeActivity.class);
+            return;
+        }
+
+        if (authDto.getHighestPitch() == null || authDto.getLowestPitch() == null) {
+            openActivityIfNotInStack(this, VoiceRecordingActivity.class);
+            return;
+        }
+    }
+
+    public void openActivityIfNotInStack(Context context, Class<?> targetActivity) {
+        boolean isActivityInStack = false;
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
+
+        for (ActivityManager.AppTask task : tasks) {
+            if (task.getTaskInfo().topActivity.getClassName().equals(targetActivity.getName())) {
+                isActivityInStack = true;
+                break;
+            }
+        }
+
+        if (!isActivityInStack) {
+            Intent intent = new Intent(context, targetActivity);
+            context.startActivity(intent);
+        }
     }
 
 }

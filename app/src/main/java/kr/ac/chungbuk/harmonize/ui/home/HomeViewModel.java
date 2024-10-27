@@ -25,6 +25,8 @@ import java.util.List;
 
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.entity.SimpleMusic;
@@ -62,9 +64,13 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void fetchRecommendMusic(OnMusicLoaded loadedListener) {
+        String userId = AuthDao.getUserId();
+        if (userId.isEmpty())
+            return;
+
         StringRequest genreMusicRequest = new StringRequest(
                 Request.Method.GET,
-                Domain.url("/api/music?size=4"),
+                Domain.url("/api/music/recommend?size=4&userId="+userId),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -101,9 +107,13 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void fetchGenreMusic(OnMusicLoaded loadedListener) {
+        String userId = AuthDao.getUserId();
+        if (userId.isEmpty())
+            return;
+
         StringRequest genreMusicRequest = new StringRequest(
                 Request.Method.GET,
-                Domain.url("/api/music?size=3&page=0&genre="+selectedGenre),
+                Domain.url("/api/music?size=3&page=0&size=3&genre="+selectedGenre+"&userId="+userId),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

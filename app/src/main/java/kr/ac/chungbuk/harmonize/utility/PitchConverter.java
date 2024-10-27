@@ -2,7 +2,11 @@ package kr.ac.chungbuk.harmonize.utility;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PitchConverter {
 
@@ -16,6 +20,26 @@ public class PitchConverter {
         "C2", "C2", "D2", "E2", "F2", "G2", "A2", "B2", "C3", "D3", "E3", "F3", "G3", "A3", "B3",
         "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "D6"
     };
+
+
+    public static final List<String> pitchStringList = createPitchStringList();
+    public static final Map<String, Double> pitchFrequencyMap = createPitchFrequencyMap();
+
+    private static List<String> createPitchStringList() {
+        List<String> list = new ArrayList<>();
+        for (int i = freqLevel.length - 2; 0 < i; i--) {
+            list.add(pitchString[i] + " (" + freqLevel[i] + "Hz)");
+        }
+        return list;
+    }
+
+    private static Map<String, Double> createPitchFrequencyMap() {
+        Map<String, Double> map = new HashMap<>();
+        for (int i = 1; i < freqLevel.length - 1; i++) {
+            map.put(pitchString[i] + " (" + freqLevel[i] + "Hz)", freqLevel[i]);
+        }
+        return map;
+    }
 
 
     /**

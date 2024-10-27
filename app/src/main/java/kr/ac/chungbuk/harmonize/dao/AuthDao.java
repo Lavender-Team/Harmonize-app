@@ -2,10 +2,12 @@ package kr.ac.chungbuk.harmonize.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -29,14 +31,17 @@ public class AuthDao {
         database.execSQL("DELETE FROM auth;");
 
         database.execSQL(
-                "INSERT INTO auth(token, user_id, nickname, gender, age, genre, created_at) VALUES ('" +
+                "INSERT INTO auth(token, user_id, nickname, gender, age, genre, created_at, highest_pitch, lowest_pitch)" +
+                "VALUES ('" +
                     authDto.getToken() + "', " +
                     authDto.getUserId().toString() + ", '" +
                     authDto.getNickname() + "', '" +
                     (authDto.getGender() != null ? authDto.getGender() : "") + "', " +
                     (authDto.getAge() != null ? authDto.getAge().toString() : 0) + ", '" +
-                    authDto.getGenre().toString() + "', '" +
-                    authDto.getCreatedAt().toString() + "');"
+                    (authDto.getGenre() != null ? authDto.getGenre().toString() : "") + "', '" +
+                    authDto.getCreatedAt().toString() + "', " +
+                    (authDto.getHighestPitch() != null ? authDto.getHighestPitch() : "NULL") + ", " +
+                    (authDto.getLowestPitch() != null ? authDto.getLowestPitch() : "NULL") + " );"
         );
 
         database.close();
@@ -45,7 +50,7 @@ public class AuthDao {
     public static AuthDto find() throws Exception {
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor cursor = database.rawQuery(
-                "SELECT token, user_id, nickname, gender, age, genre, created_at FROM auth",
+                "SELECT token, user_id, nickname, gender, age, genre, created_at, highest_pitch, lowest_pitch FROM auth",
                 null
         );
 
@@ -65,6 +70,11 @@ public class AuthDao {
         authDto.setAge(cursor.getInt(4));
         authDto.setGenre(parseList(cursor.getString(5)));
         authDto.setCreatedAt(LocalDateTime.parse(cursor.getString(6)));
+
+        if (!cursor.isNull(7))
+            authDto.setHighestPitch(cursor.getDouble(7));
+        if (!cursor.isNull(8))
+            authDto.setLowestPitch(cursor.getDouble(8));
 
         cursor.close();
         database.close();
@@ -87,7 +97,7 @@ public class AuthDao {
     public static String getToken() {
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor cursor = database.rawQuery(
-                "SELECT token, user_id, nickname, gender, age, genre, created_at FROM auth",
+                "SELECT token FROM auth",
                 null
         );
 
@@ -108,7 +118,7 @@ public class AuthDao {
     public static String getUserId() {
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor cursor = database.rawQuery(
-                "SELECT token, user_id, nickname, gender, age, genre, created_at FROM auth",
+                "SELECT user_id FROM auth",
                 null
         );
 
@@ -120,13 +130,16 @@ public class AuthDao {
         }
 
         cursor.moveToNext();
-        long userId = cursor.getLong(1);
+        long userId = cursor.getLong(0);
         cursor.close();
         database.close();
         return Long.toString(userId);
     }
 
     private static List<String> parseList(String s) {
+        if (s.isBlank())
+            return Collections.emptyList();
+
         List<String> output = new ArrayList<>();
         String listString = s.substring(1, s.length() - 1);
         StringTokenizer st = new StringTokenizer(listString, ",");

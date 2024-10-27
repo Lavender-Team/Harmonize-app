@@ -35,6 +35,7 @@ import kr.ac.chungbuk.harmonize.config.VolleySingleton;
 import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
+import lombok.Getter;
 
 public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeedbackAdapter.Holder> {
 
@@ -46,6 +47,9 @@ public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeed
 
     List<MusicListDto> items = new ArrayList<>();
     FragmentActivity activity;
+
+    @Getter
+    int feedbackCount = 0;
 
     public MusicListFeedbackAdapter(ArrayList<MusicListDto> items) {
         this.items = items;
@@ -84,7 +88,7 @@ public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeed
                     .into(holder.ivThumbnail);
         }
 
-        if (position % 3 == 1) {
+        if (position % 3 == 0) {
             holder.llFeedback.setVisibility(View.VISIBLE);
         }
         else {
@@ -176,6 +180,8 @@ public class MusicListFeedbackAdapter extends RecyclerView.Adapter<MusicListFeed
 
         if (activity == null)
             return;
+
+        feedbackCount++;
 
         StringRequest feedbackRequest = new StringRequest(
                 Request.Method.POST,

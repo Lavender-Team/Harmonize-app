@@ -35,6 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "age"       INTEGER NOT NULL,
                     "genre"     TEXT NOT NULL,
                     "created_at"    TEXT NOT NULL,
+                    "highest_pitch" REAL,
+                    "lowest_pitch" REAL,
                     PRIMARY KEY("token")
                 );
                 """;

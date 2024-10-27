@@ -4,6 +4,23 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+
+        <!-- 브라우저 앱을 열 수 있도록 설정 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <data android:scheme="https" />
+        </intent>
+
+        <package android:name="com.google.android.youtube" />
+    </queries>
+
     <application
         android:name=".config.AppContext"
         android:allowBackup="true"
@@ -17,6 +34,9 @@
         android:theme="@style/Theme.Harmonize"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.profile.FeedbackActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.analysis.VoiceRecordingActivity"
             android:exported="false" />
@@ -55,19 +75,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <queries>
-        <!-- 브라우저 앱을 열 수 있도록 설정 -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="http" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https" />
-        </intent>
-
-        <package android:name="com.google.android.youtube" />
-    </queries>
 
 </manifest>

@@ -2,9 +2,11 @@ package kr.ac.chungbuk.harmonize.ui.profile;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,9 +22,13 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
+import kr.ac.chungbuk.harmonize.MainActivity;
 import kr.ac.chungbuk.harmonize.config.Domain;
+import kr.ac.chungbuk.harmonize.config.GsonDateSupport;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.ActivitySignupBinding;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.utility.error.ErrorDetail;
 import kr.ac.chungbuk.harmonize.utility.error.ErrorResult;
 
@@ -90,11 +96,14 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Gson gson = GsonDateSupport.getInstance();
+                        AuthDto authDto = gson.fromJson(response, AuthDto.class);
 
-                        // TODO: 회원가입 성공시 로그인 후 액티비티 종료, 나이 및 연령대 설정
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "TODO: 회원가입 성공시 로그인 후 액티비티 종료, 나이 및 연령대 설정", Toast.LENGTH_LONG);
-                        toast.show();
+                        AuthDao.save(authDto);
+
+                        Intent intent = new Intent(SignupActivity.this, FeedbackActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {

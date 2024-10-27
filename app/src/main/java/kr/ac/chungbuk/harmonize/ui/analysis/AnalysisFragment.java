@@ -39,6 +39,7 @@ import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.home.HomeViewModel;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
 import kr.ac.chungbuk.harmonize.ui.profile.GenderAgeActivity;
+import kr.ac.chungbuk.harmonize.utility.PitchConverter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.MusicListFeedbackAdapter;
 
@@ -160,6 +161,14 @@ public class AnalysisFragment extends Fragment {
                 musicListFeedbackAdapter.notifyDataSetChanged();
             }
         });
+
+        // 재추천 버튼
+        binding.btnRecommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestRecommendAgain();
+            }
+        });
     }
 
     @Override
@@ -168,6 +177,23 @@ public class AnalysisFragment extends Fragment {
 
         try {
             AuthDto authDto = AuthDao.find();
+
+            if (authDto.getHighestPitch() != null)
+                binding.tvHighestPitch.setText(
+                        PitchConverter.freqToPitch(authDto.getHighestPitch()) +
+                                "(" + Math.round(authDto.getHighestPitch()) + ")"
+                );
+            else
+                binding.tvHighestPitch.setText("-");
+
+            if (authDto.getLowestPitch() != null)
+                binding.tvLowestPitch.setText(
+                        PitchConverter.freqToPitch(authDto.getLowestPitch()) +
+                                "(" + Math.round(authDto.getLowestPitch()) + ")"
+                );
+            else
+                binding.tvLowestPitch.setText("-");
+
             binding.tvGender.setText(authDto.getGender());
             binding.tvAge.setText(authDto.getAge().toString() + "대");
 
@@ -183,10 +209,14 @@ public class AnalysisFragment extends Fragment {
         }
     }
 
-    public void fetchRecommendMusic(HomeViewModel.OnMusicLoaded loadedListener) {
+    private void fetchRecommendMusic(HomeViewModel.OnMusicLoaded loadedListener) {
+        String userId = AuthDao.getUserId();
+        if (userId.isEmpty())
+            return;
+
         StringRequest genreMusicRequest = new StringRequest(
                 Request.Method.GET,
-                Domain.url("/api/music?size=8"),
+                Domain.url("/api/music/recommend?size=8&userId="+userId),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -220,5 +250,62 @@ public class AnalysisFragment extends Fragment {
             }
         };
         VolleySingleton.getInstance(getAppContext()).addToRequestQueue(genreMusicRequest);
+    }
+
+    private void requestRecommendAgain() {
+        String userId = AuthDao.getUserId();
+        if (userId.isEmpty())
+            return;
+
+        musicListFeedbackAdapter.clearItems();
+        musicListFeedbackAdapter.notifyDataSetChanged();
+
+        StringRequest recommendRequest = new StringRequest(
+                Request.Method.POST,
+                Domain.url("/api/music/recsys/collaborative?userId="+userId),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        fetchRecommendMusic(new HomeViewModel.OnMusicLoaded() {
+                            @Override
+                            public void setMusics(List<MusicListDto> musics) {
+                                musicListFeedbackAdapter.addItems(musics);
+                                musicListFeedbackAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                getAppContext(),
+                                "음악 재추천 요청 중 오류가 발생하였습니다.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        fetchRecommendMusic(new HomeViewModel.OnMusicLoaded() {
+                            @Override
+                            public void setMusics(List<MusicListDto> musics) {
+                                musicListFeedbackAdapter.addItems(musics);
+                                musicListFeedbackAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+        ) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+        VolleySingleton.getInstance(getAppContext()).addToRequestQueue(recommendRequest);
     }
 }

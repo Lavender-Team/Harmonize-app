@@ -2,6 +2,7 @@ package kr.ac.chungbuk.harmonize.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -69,6 +70,20 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        try {
+            AuthDao.find();
+        } catch (Exception e) {
+            return;
+        }
+
+        // 로그인된 상태이면 액티비티 종료
+        finish();
     }
 
     private boolean checkBeforeSubmit() {

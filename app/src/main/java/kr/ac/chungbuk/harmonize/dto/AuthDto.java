@@ -21,6 +21,8 @@ public class AuthDto {
     private String gender;
     private Integer age;
     private List<String> genre;
+    private Double highestPitch;
+    private Double lowestPitch;
 
     public List<String> getGenreValue() {
         List<String> values = new ArrayList<>();
