@@ -22,11 +22,14 @@ import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.chungbuk.harmonize.MainActivity;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.ActivityFeedbackBinding;
 import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
@@ -120,6 +123,13 @@ public class FeedbackActivity extends AppCompatActivity {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {

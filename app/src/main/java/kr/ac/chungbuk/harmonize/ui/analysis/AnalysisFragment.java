@@ -26,7 +26,9 @@ import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
@@ -238,6 +240,13 @@ public class AnalysisFragment extends Fragment {
                 }
         ) {
             @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
+            @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String utf8String = new String(response.data, "UTF-8");
@@ -294,6 +303,13 @@ public class AnalysisFragment extends Fragment {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {

@@ -19,7 +19,9 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.chungbuk.harmonize.MainActivity;
 import kr.ac.chungbuk.harmonize.config.Domain;
@@ -49,6 +51,13 @@ public class VoiceRecordingActivity extends AppCompatActivity {
         binding.btnBack.setOnClickListener((v) -> { finish(); });
 
         binding.btnManualInput.setOnClickListener((v) -> {
+            binding.llInput.setVisibility(View.VISIBLE);
+            binding.btnManualInput.setVisibility(View.GONE);
+            binding.llButtons.setVisibility(View.GONE);
+            binding.flNext.setVisibility(View.VISIBLE);
+        });
+
+        binding.btnRecord.setOnClickListener((v) -> {
             binding.llInput.setVisibility(View.VISIBLE);
             binding.btnManualInput.setVisibility(View.GONE);
             binding.llButtons.setVisibility(View.GONE);
@@ -115,6 +124,13 @@ public class VoiceRecordingActivity extends AppCompatActivity {
                 }
         ) {
             @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
+            @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String utf8String = new String(response.data, "UTF-8");
@@ -153,6 +169,13 @@ public class VoiceRecordingActivity extends AppCompatActivity {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {

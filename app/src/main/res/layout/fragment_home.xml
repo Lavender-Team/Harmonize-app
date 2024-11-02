@@ -68,6 +68,7 @@
                 tools:listitem="@layout/music_list_item_shadow"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -155,6 +156,7 @@
                 tools:listitem="@layout/music_list_item" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

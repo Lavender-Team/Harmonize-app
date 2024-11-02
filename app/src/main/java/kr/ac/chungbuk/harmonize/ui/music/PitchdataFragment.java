@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import kr.ac.chungbuk.harmonize.R;
+import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.FragmentPitchdataBinding;
+import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.MusicDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.utility.PitchConverter;
@@ -58,6 +60,26 @@ public class PitchdataFragment extends Fragment {
         if (music.getLowPitchRatio() != null)
             binding.tvLowPitchRatio.setText((double) Math.round(music.getLowPitchRatio() * 1000) / 10 + "%");
 
+        // 내 음역대 커버 비율
+        if (music.getPitchStat() != null) {
+            try {
+                AuthDto authDto = AuthDao.find();
+                if (authDto.getLowestPitch() != null && authDto.getHighestPitch() != null) {
+                    Double cover = music.getPitchStat().getCoverPercentage(
+                            PitchConverter.freqToPitch(authDto.getLowestPitch()),
+                            PitchConverter.freqToPitch(authDto.getHighestPitch())
+                    ) * 10000;
+
+                    cover = Math.round(cover) / (double) 100;
+
+                    binding.tvCoverPercentage.setText(cover + "%");
+                }
+                else
+                    throw new Exception("cannot get pitch range");
+            } catch (Exception e) {
+                binding.tvCoverPercentage.setText("-");
+            }
+        }
     }
 
 }

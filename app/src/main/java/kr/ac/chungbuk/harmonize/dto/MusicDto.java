@@ -29,9 +29,10 @@ public class MusicDto {
 
     private String status;
     private Double highestPitch;
+    private Double lowestPitch;
+    private PitchStatDto pitchStat;
     private Double highPitchRatio;
     private Double highPitchCont;
-    private Double lowestPitch;
     private Double lowPitchRatio;
     private Double lowPitchCont;
     private Integer steepSlope;

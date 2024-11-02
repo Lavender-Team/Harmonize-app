@@ -21,7 +21,9 @@ import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
@@ -83,14 +85,21 @@ public class HomeViewModel extends ViewModel {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(
-                                getAppContext(),
-                                "내 목소리 맞춤 추천곡을 가져오는 중 오류가 발생하였습니다.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+//                        Toast.makeText(
+//                                getAppContext(),
+//                                "내 목소리 맞춤 추천곡을 가져오는 중 오류가 발생하였습니다.",
+//                                Toast.LENGTH_SHORT
+//                        ).show();
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -134,6 +143,13 @@ public class HomeViewModel extends ViewModel {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
