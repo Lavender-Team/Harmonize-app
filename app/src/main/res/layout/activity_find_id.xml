@@ -89,6 +89,17 @@
                 android:textSize="16sp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="12sp"
+            android:textColor="@color/error"
+            android:text=""/>
+        />
+
     </LinearLayout>
 
     <FrameLayout
@@ -97,6 +108,7 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="36dp">
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="이메일로 아이디 보내기"
