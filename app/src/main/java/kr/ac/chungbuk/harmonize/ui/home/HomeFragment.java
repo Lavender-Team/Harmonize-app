@@ -13,7 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatToggleButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
@@ -31,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import kr.ac.chungbuk.harmonize.MainActivity;
 import kr.ac.chungbuk.harmonize.R;
 import kr.ac.chungbuk.harmonize.config.Domain;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
@@ -39,6 +44,7 @@ import kr.ac.chungbuk.harmonize.databinding.FragmentHomeBinding;
 import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.CommonMusicResultDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
+import kr.ac.chungbuk.harmonize.ui.analysis.AnalysisFragment;
 import kr.ac.chungbuk.harmonize.ui.music.MusicActivity;
 import kr.ac.chungbuk.harmonize.utility.adapter.ArtistListAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.RecentMusicListAdapter;
@@ -85,6 +91,15 @@ public class HomeFragment extends Fragment {
                 });
         binding.homeRecommendListView.setLayoutManager(homeRecommendLinearLayoutManager);
         binding.homeRecommendListView.setAdapter(homeRecommendAdapter);
+
+        /* 최상단 추천곡 목록 더보기 버튼 */
+        binding.btnRecommendMore.setOnClickListener((v) -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.navigation_analytics);
+
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.nav_view);
+            bottomNav.setSelectedItemId(R.id.navigation_analytics);
+        });
 
         
         /* 비슷한 가수 목록 */
@@ -198,8 +213,8 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
         homeViewModel.fetchRecommendMusic(new HomeViewModel.OnMusicLoaded() {
             @Override
