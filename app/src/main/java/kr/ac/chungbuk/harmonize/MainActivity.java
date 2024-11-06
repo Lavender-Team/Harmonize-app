@@ -1,17 +1,22 @@
 package kr.ac.chungbuk.harmonize;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -50,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requestAudioPermission();
+        }
     }
 
     @Override
@@ -95,4 +107,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private static final int REQUEST_AUDIO_PERMISSION = 200;
+
+    // 권한을 요청하는 메서드
+    private void requestAudioPermission() {
+        // 권한 요청
+        ActivityCompat.requestPermissions(this,
+                new String[]{ Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.RECORD_AUDIO }, REQUEST_AUDIO_PERMISSION);
+    }
+
+    // 권한 요청 결과 처리 메서드
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_AUDIO_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한 부여 성공
+            } else {
+                // 권한이 거부됨
+                Toast.makeText(this, "정상적인 앱 이용을 위해 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

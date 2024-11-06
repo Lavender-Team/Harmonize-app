@@ -3,7 +3,10 @@ package kr.ac.chungbuk.harmonize.ui.analysis;
 import static kr.ac.chungbuk.harmonize.config.AppContext.getAppContext;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -31,11 +34,14 @@ import kr.ac.chungbuk.harmonize.databinding.ActivityVoiceRecordingBinding;
 import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.home.HomeViewModel;
+import kr.ac.chungbuk.harmonize.utility.AudioRecorder;
 import kr.ac.chungbuk.harmonize.utility.PitchConverter;
 
 public class VoiceRecordingActivity extends AppCompatActivity {
 
     ActivityVoiceRecordingBinding binding;
+
+    AudioRecorder audioRecorder;
 
     private double highestPitch;
     private double lowestPitch;
@@ -47,10 +53,13 @@ public class VoiceRecordingActivity extends AppCompatActivity {
         View root = binding.getRoot();
         setContentView(root);
 
+        audioRecorder = new AudioRecorder();
+
         /* 뒤로 가기 버튼 리스너 */
         binding.btnBack.setOnClickListener((v) -> { finish(); });
 
         binding.btnManualInput.setOnClickListener((v) -> {
+            binding.llRecording.setVisibility(View.GONE);
             binding.llInput.setVisibility(View.VISIBLE);
             binding.btnManualInput.setVisibility(View.GONE);
             binding.llButtons.setVisibility(View.GONE);
@@ -58,10 +67,31 @@ public class VoiceRecordingActivity extends AppCompatActivity {
         });
 
         binding.btnRecord.setOnClickListener((v) -> {
-            binding.llInput.setVisibility(View.VISIBLE);
-            binding.btnManualInput.setVisibility(View.GONE);
-            binding.llButtons.setVisibility(View.GONE);
-            binding.flNext.setVisibility(View.VISIBLE);
+            audioRecorder.startRecording(new AudioRecorder.RecordingCallback() {
+                @Override
+                public void onRecordingStarted() {
+                    binding.tvRecordingLabel.setText("듣고 있어요...");
+                }
+
+                @Override
+                public void onVoiceDetacted() {
+                    binding.tvRecordingLabel.setText("녹음 중...");
+                    binding.tvRecordingLabel.setTextColor(Color.BLACK);
+                }
+
+                @Override
+                public void onRecordingStopped() {
+                    binding.tvRecordingLabel.setText("녹음 완료");
+
+                    // TODO : 서버로 녹음된 목소리 전달하기
+
+                    binding.llRecording.setVisibility(View.GONE);
+                    binding.llInput.setVisibility(View.VISIBLE);
+                    binding.btnManualInput.setVisibility(View.GONE);
+                    binding.llButtons.setVisibility(View.GONE);
+                    binding.flNext.setVisibility(View.VISIBLE);
+                }
+            });
         });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, PitchConverter.pitchStringList);

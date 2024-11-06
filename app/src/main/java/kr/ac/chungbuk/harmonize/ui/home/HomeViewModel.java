@@ -56,12 +56,6 @@ public class HomeViewModel extends ViewModel {
         artists.add(new SimpleMusic("+13", "잔나비"));
         artists.add(new SimpleMusic("+13", "잔나비"));
         artists.add(new SimpleMusic("+13", "잔나비"));
-        artists.add(new SimpleMusic("+13", "잔나비"));
-        artists.add(new SimpleMusic("+13", "잔나비"));
-        artists.add(new SimpleMusic("+13", "잔나비"));
-        artists.add(new SimpleMusic("+13", "잔나비"));
-        artists.add(new SimpleMusic("+13", "잔나비"));
-        artists.add(new SimpleMusic("+13", "잔나비"));
 
     }
 
@@ -135,11 +129,11 @@ public class HomeViewModel extends ViewModel {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(
-                                getAppContext(),
-                                "장르별 맞춤 추천곡을 가져오는 중 오류가 발생하였습니다.",
-                                Toast.LENGTH_SHORT
-                        ).show();
+//                        Toast.makeText(
+//                                getAppContext(),
+//                                "장르별 맞춤 추천곡을 가져오는 중 오류가 발생하였습니다.",
+//                                Toast.LENGTH_SHORT
+//                        ).show();
                     }
                 }
         ) {
