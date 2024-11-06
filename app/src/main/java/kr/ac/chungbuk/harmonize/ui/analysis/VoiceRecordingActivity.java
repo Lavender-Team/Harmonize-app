@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import kr.ac.chungbuk.harmonize.dto.AuthDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
 import kr.ac.chungbuk.harmonize.ui.home.HomeViewModel;
 import kr.ac.chungbuk.harmonize.utility.AudioRecorder;
+import kr.ac.chungbuk.harmonize.utility.CustomMultipartRequest;
 import kr.ac.chungbuk.harmonize.utility.PitchConverter;
 
 public class VoiceRecordingActivity extends AppCompatActivity {
@@ -82,14 +84,8 @@ public class VoiceRecordingActivity extends AppCompatActivity {
                 @Override
                 public void onRecordingStopped() {
                     binding.tvRecordingLabel.setText("녹음 완료");
-
-                    // TODO : 서버로 녹음된 목소리 전달하기
-
-                    binding.llRecording.setVisibility(View.GONE);
-                    binding.llInput.setVisibility(View.VISIBLE);
-                    binding.btnManualInput.setVisibility(View.GONE);
-                    binding.llButtons.setVisibility(View.GONE);
-                    binding.flNext.setVisibility(View.VISIBLE);
+                    uploadUserVoice();
+                    binding.tvRecordingLabel.setText("서버로 전송 중");
                 }
             });
         });
@@ -117,6 +113,60 @@ public class VoiceRecordingActivity extends AppCompatActivity {
         });
     }
 
+    private void uploadUserVoice() {
+        String userId = AuthDao.getUserId();
+        if (userId.isEmpty() || audioRecorder == null || audioRecorder.getFilePath() == null)
+            return;
+
+        File audioFile = new File(audioRecorder.getFilePath());
+
+        CustomMultipartRequest request = new CustomMultipartRequest(
+                Domain.url("/api/user/uasys/analyze"),
+                audioFile,
+                response -> {
+                    // 성공적으로 파일이 업로드되었을 때
+                    System.out.println("File uploaded successfully: " + response);
+
+                    // TODO : 서버로 녹음된 목소리 전달 + 처리
+
+                    binding.llRecording.setVisibility(View.GONE);
+                    binding.llInput.setVisibility(View.VISIBLE);
+                    binding.btnManualInput.setVisibility(View.GONE);
+                    binding.llButtons.setVisibility(View.GONE);
+                    binding.flNext.setVisibility(View.VISIBLE);
+                },
+                error -> {
+                    // 파일 업로드에 실패했을 때
+                    Toast.makeText(
+                            getAppContext(),
+                            "분석 업로드 중 오류가 발생하였습니다.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AuthDao.getToken());
+                return params;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+
+        VolleySingleton.getInstance(getAppContext()).addToRequestQueue(request);
+    }
+
     private void postUserAnalysis() {
         String userId = AuthDao.getUserId();
         if (userId.isEmpty())
@@ -124,7 +174,7 @@ public class VoiceRecordingActivity extends AppCompatActivity {
 
         StringRequest genreMusicRequest = new StringRequest(
                 Request.Method.POST,
-                Domain.url("/api/user/analysis?userId="+userId+"&highestPitch="+highestPitch+"&lowestPitch="+lowestPitch),
+                Domain.url("/api/user/" + userId + "/analysis?highestPitch="+highestPitch+"&lowestPitch="+lowestPitch),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

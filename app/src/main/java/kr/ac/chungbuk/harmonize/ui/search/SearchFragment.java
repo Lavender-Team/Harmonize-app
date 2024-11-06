@@ -46,11 +46,8 @@ import kr.ac.chungbuk.harmonize.utility.adapter.OnItemClickListener;
 import kr.ac.chungbuk.harmonize.utility.adapter.OnItemRemoveListener;
 import kr.ac.chungbuk.harmonize.utility.adapter.SearchHistoryAdapter;
 import kr.ac.chungbuk.harmonize.utility.adapter.TabFragmentAdapter;
-import kr.ac.chungbuk.harmonize.utility.network.NetworkManager;
 
 public class SearchFragment extends Fragment implements IFilterApply {
-
-    NetworkManager networkManager;
 
     private SearchViewModel searchViewModel;
     private SearchHistoryAdapter historyAdapter;
@@ -64,8 +61,6 @@ public class SearchFragment extends Fragment implements IFilterApply {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        networkManager = NetworkManager.getInstance(getContext());
 
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
 
