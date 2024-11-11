@@ -40,11 +40,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="최고음"
+                        android:text="최저음"
                         android:textSize="12dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
-                        android:id="@+id/tvHighestPitch"
+                        android:id="@+id/tvLowestPitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -60,11 +60,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="최저음"
+                        android:text="최고음"
                         android:textSize="12dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
-                        android:id="@+id/tvLowestPitch"
+                        android:id="@+id/tvHighestPitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -106,11 +106,11 @@
                     <TextView
                         android:layout_width="72dp"
                         android:layout_height="wrap_content"
-                        android:text="고음 비율"
+                        android:text="저음 비율"
                         android:textSize="14dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
-                        android:id="@+id/tvHighPitchRatio"
+                        android:id="@+id/tvLowPitchRatio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -126,11 +126,11 @@
                     <TextView
                         android:layout_width="72dp"
                         android:layout_height="wrap_content"
-                        android:text="저음 비율"
+                        android:text="고음 비율"
                         android:textSize="14dp"
                         android:textColor="@color/gray_4"/>
                     <TextView
-                        android:id="@+id/tvLowPitchRatio"
+                        android:id="@+id/tvHighPitchRatio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -232,7 +232,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!--<LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -247,20 +247,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="음높이 그래프"
+                    android:text="음역대 통계"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
 
-                <kr.ac.chungbuk.harmonize.uicomponent.PitchGraphView
-                    android:id="@+id/pitchGraphView"
+                <kr.ac.chungbuk.harmonize.uicomponent.PitchStatView
+                    android:id="@+id/pitchStat"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="240dp"
                     android:layout_marginTop="12dp"
                     />
 
             </LinearLayout>
-        </LinearLayout>-->
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

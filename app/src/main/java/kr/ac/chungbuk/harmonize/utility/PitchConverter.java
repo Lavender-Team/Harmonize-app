@@ -33,6 +33,14 @@ public class PitchConverter {
         return list;
     }
 
+    public static String getPitchMenuString(String pitch) {
+        for (String menu : pitchStringList) {
+            if (menu.startsWith(pitch))
+                return menu;
+        }
+        return "";
+    }
+
     private static Map<String, Double> createPitchFrequencyMap() {
         Map<String, Double> map = new HashMap<>();
         for (int i = 1; i < freqLevel.length - 1; i++) {

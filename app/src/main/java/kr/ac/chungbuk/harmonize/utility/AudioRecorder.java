@@ -73,8 +73,8 @@ public class AudioRecorder {
 
             if (!isVoiceDetected) {
                 isVoiceDetected = true;
-                // 목소리를 감지한 순간부터 10초 후 자동으로 녹음 중지
-                handler.postDelayed(this::stopRecording, 10000);
+                // 목소리를 감지한 순간부터 20초 후 자동으로 녹음 중지
+                handler.postDelayed(this::stopRecording, 20000);
                 isCompleted = true;
             }
         } else {

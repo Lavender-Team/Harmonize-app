@@ -80,14 +80,61 @@
             android:id="@+id/llRecording"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:gravity="center">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llActionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="48dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아래 문구를"
+                    android:textSize="20sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="천천히 "
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="소리 내서"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_500"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" 계속 읽어주세요."
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tvRecordingLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
                 android:text=""
                 android:textSize="20sp"/>
+
+
 
         </LinearLayout>
 

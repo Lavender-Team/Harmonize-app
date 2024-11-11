@@ -2,6 +2,7 @@ package kr.ac.chungbuk.harmonize.ui.music;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,23 @@ public class PitchdataFragment extends Fragment {
                     throw new Exception("cannot get pitch range");
             } catch (Exception e) {
                 binding.tvCoverPercentage.setText("-");
+            }
+        }
+
+        if (music.getPitchStat() != null) {
+            AuthDto authDto;
+            try {
+                authDto = AuthDao.find();
+
+                binding.pitchStat.updateChart(
+                        music.getPitchStat(),
+                        PitchConverter.freqToPitch(authDto.getLowestPitch()),
+                        PitchConverter.freqToPitch(authDto.getHighestPitch())
+                );
+            }
+            catch (Exception ignored) {
+                // 로그인 정보 없을시
+                binding.pitchStat.updateChart(music.getPitchStat(), "C2", "D6");
             }
         }
     }

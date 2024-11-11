@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -29,11 +32,14 @@ import java.util.Map;
 
 import kr.ac.chungbuk.harmonize.MainActivity;
 import kr.ac.chungbuk.harmonize.config.Domain;
+import kr.ac.chungbuk.harmonize.config.GsonDateSupport;
 import kr.ac.chungbuk.harmonize.config.VolleySingleton;
 import kr.ac.chungbuk.harmonize.dao.AuthDao;
 import kr.ac.chungbuk.harmonize.databinding.ActivityVoiceRecordingBinding;
 import kr.ac.chungbuk.harmonize.dto.AuthDto;
+import kr.ac.chungbuk.harmonize.dto.MusicDto;
 import kr.ac.chungbuk.harmonize.dto.MusicListDto;
+import kr.ac.chungbuk.harmonize.dto.VoiceAnalysisDto;
 import kr.ac.chungbuk.harmonize.ui.home.HomeViewModel;
 import kr.ac.chungbuk.harmonize.utility.AudioRecorder;
 import kr.ac.chungbuk.harmonize.utility.CustomMultipartRequest;
@@ -72,20 +78,23 @@ public class VoiceRecordingActivity extends AppCompatActivity {
             audioRecorder.startRecording(new AudioRecorder.RecordingCallback() {
                 @Override
                 public void onRecordingStarted() {
+                    binding.tvRecordingLabel.setTextColor(Color.GRAY);
                     binding.tvRecordingLabel.setText("듣고 있어요...");
                 }
 
                 @Override
                 public void onVoiceDetacted() {
-                    binding.tvRecordingLabel.setText("녹음 중...");
                     binding.tvRecordingLabel.setTextColor(Color.BLACK);
+                    binding.llActionLabel.setVisibility(View.VISIBLE);
+                    startCountdown();
                 }
 
                 @Override
                 public void onRecordingStopped() {
+                    binding.llActionLabel.setVisibility(View.GONE);
                     binding.tvRecordingLabel.setText("녹음 완료");
                     uploadUserVoice();
-                    binding.tvRecordingLabel.setText("서버로 전송 중");
+                    binding.tvRecordingLabel.setText("서버로 전송 중...");
                 }
             });
         });
@@ -121,13 +130,24 @@ public class VoiceRecordingActivity extends AppCompatActivity {
         File audioFile = new File(audioRecorder.getFilePath());
 
         CustomMultipartRequest request = new CustomMultipartRequest(
-                Domain.url("/api/user/uasys/analyze"),
+                Domain.url("/api/user/uasys/analyze?userId="+userId),
                 audioFile,
                 response -> {
-                    // 성공적으로 파일이 업로드되었을 때
-                    System.out.println("File uploaded successfully: " + response);
+                    // 결과 파싱
+                    Gson gson = GsonDateSupport.getInstance();
+                    VoiceAnalysisDto voiceAnalysis = gson.fromJson(response, VoiceAnalysisDto.class);
 
-                    // TODO : 서버로 녹음된 목소리 전달 + 처리
+                    // 결과로 받은 Pitch 선택
+                    binding.tctvHighestPitch.setText(PitchConverter.getPitchMenuString(voiceAnalysis.getMaxPitch()), false);
+                    binding.tctvLowestPitch.setText(PitchConverter.getPitchMenuString(voiceAnalysis.getMinPitch()), false);
+
+                    try {
+                        highestPitch = PitchConverter.pitchFrequencyMap.get(binding.tctvHighestPitch.getText().toString());
+                        lowestPitch = PitchConverter.pitchFrequencyMap.get(binding.tctvLowestPitch.getText().toString());
+                    } catch (Exception e) {
+                        binding.tctvHighestPitch.setText("", false);
+                        binding.tctvLowestPitch.setText("", false);
+                    }
 
                     binding.llRecording.setVisibility(View.GONE);
                     binding.llInput.setVisibility(View.VISIBLE);
@@ -137,11 +157,13 @@ public class VoiceRecordingActivity extends AppCompatActivity {
                 },
                 error -> {
                     // 파일 업로드에 실패했을 때
-                    Toast.makeText(
-                            getAppContext(),
-                            "분석 업로드 중 오류가 발생하였습니다.",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    binding.tvRecordingLabel.setTextColor(Color.GRAY);
+                    binding.tvRecordingLabel.setText("오류 발생!\n다시 시도하려면 아래 버튼을 눌러주세요.");
+//                    Toast.makeText(
+//                            getAppContext(),
+//                            "분석 업로드 중 오류가 발생하였습니다.",
+//                            Toast.LENGTH_SHORT
+//                    ).show();
                 }
         ) {
             @Override
@@ -269,5 +291,26 @@ public class VoiceRecordingActivity extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(getAppContext()).addToRequestQueue(recommendRequest);
+    }
+
+    private void startCountdown() {
+        new CountDownTimer(19000, 1000) { // 19초 동안 1초 간격
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int secondsRemaining = (int) (millisUntilFinished / 1000) + 1;
+                binding.tvRecordingLabel.setText(
+                        "하모나이즈는 목소리 분석을 통해\n" +
+                        "부르기 좋은 음악을 추천합니다.\n\n" +
+                        "목소리 톤에서 적합한 음역대를\n" +
+                        "알아내고, 선호하시는 음악을\n" +
+                        "찾아드리겠습니다. " +
+                        "(" + secondsRemaining + "초)");
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
     }
 }
