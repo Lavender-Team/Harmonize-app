@@ -16,3 +16,13 @@
 ## Previous version
 
 [Lavender-Team/Harmonize](https://github.com/Lavender-Team/Harmonize)
+
+## Screenshots
+
+<table width="100%">
+    <tr>
+        <td width="33%"><img src="https://github.com/Lavender-Team/Harmonize-app/blob/develop/screenshot/1.jpg?raw=true"  alt="하모나이즈 앱 홈 화면"></td>
+        <td width="33%"><img src="https://github.com/Lavender-Team/Harmonize-app/blob/develop/screenshot/2.jpg?raw=true" alt="음악 추천 화면"></td>
+        <td width="33%"><img src="https://github.com/Lavender-Team/Harmonize-app/blob/develop/screenshot/3.jpg?raw=true" alt="음악 상세정보 화면"></td>
+    </tr>
+</table>
